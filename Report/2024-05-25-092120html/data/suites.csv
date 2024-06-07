@@ -1,0 +1,3 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"skipped","Sat May 25 09:21:41 CST 2024","Sat May 25 09:21:41 CST 2024","0","","","","","","节目单预览",""
+"passed","Sat May 25 09:21:36 CST 2024","Sat May 25 09:21:41 CST 2024","4711","test_case","test_media_center","TestMediaCenter","","","点击素材中心",""

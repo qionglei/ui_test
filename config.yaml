@@ -1,0 +1,10 @@
+test_env_url: https://test.hkciot.com/#/login
+test_env_username: uitest
+test_env_password: Aa12345678
+
+cloud_env_url: https://cloud.hkciot.com/#/login
+cloud_env_username: hkctest
+cloud_env_password: Aa123456
+
+test_terminal_id: HD00C0001
+test_terminal_name: test_real_ebox

@@ -1,0 +1,1 @@
+{"uuid": "c49a15ca-8ab3-425f-aaf3-06c63063f080", "children": ["db046eb9-1a21-46ae-b613-39587ec37035"], "befores": [{"name": "clear_terminal_list", "status": "passed", "start": 1715396146285, "stop": 1715396146595}], "start": 1715396146285, "stop": 1715396265289}

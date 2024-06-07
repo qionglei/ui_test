@@ -1,0 +1,3 @@
+INFO     config.log_config:test_play_bill.py:194 Start print log
+WARNING  config.log_config:test_play_bill.py:196 Something maybe fail.
+INFO     config.log_config:test_play_bill.py:197 Finish
