@@ -1,0 +1,13 @@
+2024-05-10 09:17:26,688 - config.log_config - INFO - Start print log
+2024-05-10 09:17:26,689 - config.log_config - WARNING - Something maybe fail.
+2024-05-10 09:17:26,689 - config.log_config - INFO - Finish
+2024-05-13 10:22:26,976 - config.log_config - INFO - success detele all medias
+2024-05-13 10:22:46,862 - config.log_config - INFO - success detele all folders
+2024-05-13 10:22:47,291 - config.log_config - INFO - success detele all medias
+2024-05-13 14:33:06,912 - config.log_config - INFO - success detele all folders
+2024-05-14 09:37:21,220 - config.log_config - INFO - Start print log
+2024-05-14 09:37:21,220 - config.log_config - WARNING - Something maybe fail.
+2024-05-14 09:37:21,220 - config.log_config - INFO - Finish
+2024-05-25 14:40:14,616 - config.log_config - INFO - Start print log
+2024-05-25 14:40:14,619 - config.log_config - WARNING - Something maybe fail.
+2024-05-25 14:40:14,620 - config.log_config - INFO - Finish
