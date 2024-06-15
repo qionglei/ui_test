@@ -36,7 +36,9 @@ class MediaPage(BasePage):
         :return:
         """
         current_window_size =self.get_window_size()
+        print("当前的size为：",current_window_size)
         self.maxsize_window()
+        # self.switch_to_media_center()   #去掉是因为在联屏姐节目的弹框中，也可以进行上传
         try:
             with step("点击上传按钮"):
                 self.click_up_load()

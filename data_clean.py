@@ -1,6 +1,9 @@
 import pymysql.cursors
 
 import traceback
+
+import yaml
+
 from common.set_up_media_list import MediaList
 from common.set_up_org import OrgList
 from common.set_up_play_bill import PlayBill
@@ -8,6 +11,7 @@ from common.set_up_program_list import ProgramList
 from common.set_up_terminal_list import Terminal_List
 # from config.log_config import logger
 # from config.log_config import logger
+
 
 host = 'rm-wz9vq722u8axcvo06oo.mysql.rds.aliyuncs.com'
 
@@ -89,6 +93,39 @@ def api_clear_data():
 
     except Exception as e:
         traceback.print_exc()
+
+
+def clear_terminal():
+
+    conf_path = r"D:\git\ui_test\config.yaml"
+    with open(conf_path) as f:
+        environment_conf = yaml.load(f.read(), Loader=yaml.SafeLoader)
+    real_terminal_id = environment_conf["test_terminal_id"]
+    # real_terminal_name = environment_conf["test_terminal_name"]
+    # 建立与MySQL的连接
+    connection = pymysql.connect(host=host, port=3391, user='hkc_cv_user', password='Hkc285$$', database='hkc_cv')
+    cursor = connection.cursor()
+
+    try:
+        connection.begin()
+        # 定义要执行的SQL语句列表
+        sql_statements = [
+            f"DELETE FROM terminal WHERE sn = '{real_terminal_id}",
+            "DELETE FROM terminal WHERE crop_id = '1751805517940535298'",]
+
+        # 遍历SQL语句列表，依次执行每条语句
+        for statement in sql_statements:
+            cursor.execute(statement)
+
+        # 提交事务
+        connection.commit()
+    except Exception as e:
+        print("Error executing SQL statements: ", str(e))
+    finally:
+        # 关闭游标和连接
+        cursor.close()
+        connection.close()
+        # print("终端sn清理已完成")
 
 #
 # if __name__ == "__main__":

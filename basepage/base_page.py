@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
@@ -19,6 +19,8 @@ from datetime import datetime
 # import os
 # from conftest import driver
 #---------
+# from config.log_config import logger
+
 
 class BasePage(object):
     timeout = 10
@@ -56,11 +58,11 @@ class BasePage(object):
         窗口最大化
         """
         current_window_size = self.get_window_size()
-        fixed_window = (1722, 1034)
-        if current_window_size != fixed_window:
+        fixed_window = (1050, 1000)
+        if current_window_size < fixed_window:
             self.driver.maximize_window()
         else:
-            pass
+            self.set_window_size(1050,1000)
 
     def minimize_window(self):
         """
@@ -142,37 +144,116 @@ class BasePage(object):
     #     time.sleep(0.5)
     #     return w_element
 
-    def get_element(self, args):
-        locator_type = By.XPATH
-        timeout = 10
-        """
-        获取元素，通过，区分开，类别 内容
-        ('x,//*[@id="kw"])
-        """
-        if "," not in args:
-            return self.driver.find_element(By.XPATH, value=args)
-        args_by = args.split(",")[0]
+    # def get_element(self, args):
+    #     locator_type = By.XPATH
+    #     timeout = 10
+    #     """
+    #     获取元素，通过，区分开，类别 内容
+    #     ('x,//*[@id="kw"])
+    #     """
+    #     if "," not in args:
+    #         return self.driver.find_element(By.XPATH, value=args)
+    #     args_by = args.split(",")[0]
+    #
+    #     # print("使用的定位方式是：", args_by)
+    #     args_value = args.split(",")[1]
+    #     # print("定位的元素是：", args_value)
+    #
+    #     """
+    #         简化的查找元素方法，使用LocatorType枚举和可选的超时时间
+    #     """
+    #     if timeout is None:
+    #         timeout = timeout  # 如果未指定超时，则使用默认的超时时间
+    #         print("元素超时时间，10s")
+    #     try:
+    #         wait = WebDriverWait(self.driver, timeout)
+    #         element = wait.until(
+    #             EC.presence_of_element_located((locator_type, args_value)))
+    #         return element
+    #     except TimeoutException:
+    #         print(f"元素查找超时: {locator_type}={args_value}")
+    #         return None
 
-        # print("使用的定位方式是：", args_by)
-        args_value = args.split(",")[1]
-        # print("定位的元素是：", args_value)
-
+    def get_element(self, selector):
         """
-            简化的查找元素方法，使用LocatorType枚举和可选的超时时间
+        这个地方为什么是根据=来切割字符串，请看页面里定位元素的方法
+        submit_btn = "id=su"
+        login_lnk = "xpath = //*[@id='u1']/a[7]"  # 百度首页登录链接定位
+        如果采用等号，结果很多xpath表达式中包含一个=，这样会造成切割不准确，影响元素定位
+        :param selector:
+        :return:
         """
-        if timeout is None:
-            timeout = timeout  # 如果未指定超时，则使用默认的超时时间
-            print("元素超时时间，10s")
-        try:
-            wait = WebDriverWait(self.driver, timeout)
-            element = wait.until(
-                EC.presence_of_element_located((locator_type, args_value)))
-            return element
-        except TimeoutException:
-            print(f"元素查找超时: {locator_type}={args_value}")
-            return None
+        # if "," not in args:
+        #     return self.driver.find_element(By.XPATH, value=args)
+        #     args_by = args.split(",")[0]
+        #
+        #     # print("使用的定位方式是：", args_by)
+        #     args_value = args.split(",")[1]
+        #
+        element = ''
+        if ',' not in selector:
+            # 如果不是：分隔直接认为是id
+            # return self.driver.find_element_by_id(selector)
+            return self.driver.find_element(By.ID, value=selector)
 
+        # selector_by = selector.split('=>')[0]  # 元素名称
+        # selector_value = selector.split('=>')[1]  # 元素ID名称
 
+        selector_by = selector.split(',')[0]  # 元素名称
+        selector_value = selector.split(',')[1]  # 元素ID名称
+
+        # print("selector_by:********",selector_by)
+        # print("selector_value:*********",selector_value)
+
+        if selector_by == "i" or selector_by == "id":
+            try:
+                # element = self.driver.find_element_by_id(selector_value)  # id 定位
+                element = self.driver.find_element(By.ID, value=selector_value)
+                # logger.info("Had find the element:  %s  successful"
+
+                #             "by: %s via value:%s" % (element.text, selector_by, selector_value))
+            except NoSuchElementException as e:
+                # logger.error("NoSuchElementException:%s" % e)
+                # self.get_windows_img()
+                raise e
+        elif selector_by == "n" or selector_by == "name":
+            # element = self.driver.find_element_by_name(selector_value)  # name 名称定位
+            element =self.driver.find_element(By.NAME, value=selector_value)
+        elif selector_by == "c" or selector_by == "class_name":
+            # element = self.driver.find_element_by_class_name(selector_value)  # css 样式名称定位
+            element = self.driver.find_element(By.CLASS_NAME, value=selector_value)
+        elif selector_by == "l" or selector_by == "link_text":
+            try:
+                # element = self.driver.find_element_by_link_text(selector_value)  # 文本超链接定位
+                element = self.driver.find_element(By.LINK_TEXT, value=selector_value)
+                # logger.info(("Had find the element  %s  successful""by %s via value:%s" % (element.text, selector_by, selector_value)))
+            except NoSuchElementException as e:
+                # logger.error("NoSuchElementException:%s" % e)
+                # self.get_windows_img()
+                raise
+        elif selector_by == "p" or selector_by == "partial_link_text":
+            # element = self.driver.find_element_by_partial_link_text(selector_value)
+            element =  self.driver.find_element(By.PARTIAL_LINK_TEXT, value=selector_value)
+        elif selector_by == "t" or selector_by == "tag_name":
+            # element = self.driver.find_element_by_tag_name(selector_value)
+            element = self.driver.find_element(By.TAG_NAME, value=selector_value)
+        elif selector_by == "x" or selector_by == "by_xpath":
+            try:
+                # element = self.driver.find_element_by_xpath(selector_value)
+                element = self.driver.find_element(By.XPATH, value=selector_value)
+                # logger.info("Had find the element:  %s  successful by %s via value:%s" % (element.text, selector_by, selector_value))/
+            except NoSuchElementException as e:
+                # logger.error("NoSuchElementException:%s" % e)
+                # self.get_windows_img()
+                raise
+        elif selector_by == "s" or selector_by == "selector_selector":
+            # element = self.driver.find_element_by_css_selector(selector_value)
+            element = self.driver.find_element(By.PARTIAL_LINK_TEXT, value=selector_value)
+        else:
+            # logger.error("Please enter a valid type of targeting elements.")
+            raise NameError("Please enter a valid type of targeting elements.")
+
+        return element
 
     def get_elements(self, args):
         """
@@ -216,6 +297,7 @@ class BasePage(object):
             return None
         time.sleep(0.5)
         return elements
+
 
     def get_element_form_parent_by_e(self, par_e_or_pare_args, son_args):
         """

@@ -67,6 +67,24 @@ class ReleasePage(BasePage):
         # else:
         #     self.click(know_alert)
 
+        # # 如果没选择设备
+        # terminal_select = 'by_xpath,//div[@class="polygon"]/div[text()="选设备"]'
+        # terminal_select_element = self.get_element(terminal_select)
+        # if not terminal_select_element:
+        #     pass
+        # else:
+        #     self.choose_terminal()
+        #     self.select_all_terminals()
+
+        choose_terminal_button = 'by_xpath,//div[@class="step-name" and text()="选设备"]'
+        clickable_ele = self.get_element('by_xpath,//div[@class="step-name" and text()="选设备"]/..')
+        get_classmethod = clickable_ele.get_attribute("class")
+        if get_classmethod == "polygon":
+            self.choose_terminal()
+            self.select_all_terminals()
+
+
+
     def set_playbill_name(self, playbill_name):
         """
         重命名节目单
@@ -83,6 +101,14 @@ class ReleasePage(BasePage):
         """
         temporary_storage_locator = 'by_xpath,//span[text()="暂存"]'
         self.click(temporary_storage_locator)
+
+        choose_terminal_button = 'by_xpath,//div[@class="step-name" and text()="选设备"]'
+        clickable_ele = self.get_element('by_xpath,//div[@class="step-name" and text()="选设备"]/..')
+        get_classmethod = clickable_ele.get_attribute("class")
+        if get_classmethod == "polygon":
+            self.choose_terminal()
+            self.select_all_terminals()
+
 
     #  ============================发布策略======================================================
     def is_silence(self, is_silence=True):
@@ -164,7 +190,7 @@ class ReleasePage(BasePage):
         choose_first_terminal = 'by_xpath,//span[@class="el-checkbox__input"]/span[@class="el-checkbox__inner"]'
         self.click(choose_first_terminal)
 
-    def  switch_terminal_group(self):
+    def switch_terminal_group(self):
         """
         在选设备抽屉，切换到‘设备分组’tab上
         :return:
@@ -280,6 +306,22 @@ class ReleasePage(BasePage):
 
         disselect_all_locator = 'by_xpath,//span[text()="清空"]'
         self.click(disselect_all_locator)
+
+    def confirm_terminal_button(self):
+        """
+        选设备弹框，点击确定按钮
+        :return:
+        """
+        confirm_button_locator ='by_xpath,//span[text()="确定"]'
+        self.click(confirm_button_locator)
+
+    def click_system_icon(self):
+        """
+
+        :return:
+        """
+        system_icon ='by_xpath,//div[@class="icon-box"]'
+        self.click(system_icon)
 
     def switch_program_edit(self):
         """
@@ -660,16 +702,18 @@ class ReleasePage(BasePage):
         """
         先拿到所有的label，然后获取第一个
         如果没有label，则需要生成至少一个label
+        如果没有label，则需要生成至少一个label
         """
-        all_labels_locator = 'by_xpath,//div[@class="item-box"]/div'
+        all_labels_locator = 'by_xpath,//div[@class="item-box"]/div[@class="item"]'
         if self.element_exist(all_labels_locator):
             all_labels_ele = self.get_elements(all_labels_locator)
             print("all_labels_ele",all_labels_ele)
             first_label_ele = all_labels_ele[0]
+            print("first_labels_ele", first_label_ele)
 
             ActionChains(self.driver).move_to_element(first_label_ele).perform()
         else:
-            print("当前没有标签111")
+            print("当前没有标签")
 
     def delete_first_label(self):
         """

@@ -41,7 +41,7 @@ def driver(env):
 
 def env_conf():
     # config_path = os.path.join(request.config.rootdir, "config.yaml")
-    conf_path = r"D:\ui\config.yaml"
+    conf_path = r"D:\git\ui_test\config.yaml"
     with open(conf_path) as f:
         environment_conf = yaml.load(f.read(), Loader=yaml.SafeLoader)
     return environment_conf

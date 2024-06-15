@@ -80,11 +80,11 @@ class ProgramPage(MediaPage):
                 pass
 
             with step("在编辑器中进行保存"):
-                self.save_general_program()
-                time.sleep(3)
+                self.click('by_xpath,//span[text()="保存"]')
+                time.sleep(2)
                 self.comeback_general_program()
-                time.sleep(1)
-
+                time.sleep(0.5)
+                self.refresh()
         except ElementNotInteractableException as e:
             raise e
 
@@ -116,7 +116,7 @@ class ProgramPage(MediaPage):
         self.choose_relevance_media()
 
         # 上传一个素材
-        self.upload()
+        self.upload_media()
 
         # 选择一个素材
         self.hover_to_media()
@@ -350,10 +350,11 @@ class ProgramPage(MediaPage):
         ActionChains(self.driver).move_to_element(first_mask_ele).perform()
 
     def choose_first_program(self):
-        choose_first_program_locator = 'by_xpath,//div[@class="mask radiusAll"]/img'
-        all_eles = self.get_elements(choose_first_program_locator)
-        first_ele = all_eles[1]
-        ActionChains(self.driver).move_to_element(first_ele).click(first_ele).perform()
+        choose_first_program_locator = 'by_xpath,//div[@class="mask radiusAll"]/img[2]'
+        # all_eles = self.get_elements(choose_first_program_locator)
+        # first_ele = all_eles[1]
+        # ActionChains(self.driver).move_to_element(first_ele).click(first_ele).perform()
+        self.click(choose_first_program_locator)
 
     def choose_program(self, name):
         """
@@ -415,18 +416,29 @@ class ProgramPage(MediaPage):
 
     def program_copy_name(self, copy_name):
         """
-        引用节目时，输入节目名称
+        节目管理页面，引用节目时，输入节目名称
         :return:
         """
         program_copy_name_locator = 'by_xpath,//input[@placeholder="请输入名称"]'
+        # self.clear(program_copy_name_locator)
         self.input(program_copy_name_locator, copy_name)
 
-    def rename_program(self):
+    def click_rename_program(self):
         """
         重命名节目
         :return:
         """
         self.click('by_xpath,//span[text()="重命名"]')
+
+    def rename_program_name(self,name):
+        """
+        进行节目的重命名,先清空 再输入新的名字
+        :return:
+        """
+        rename_locator = 'by_xpath,//input[@placeholder="请输入名称"]'
+        self.clear(rename_locator)
+        self.input(rename_locator,name)
+
 
     def close_delete_program_alert(self):
         """
