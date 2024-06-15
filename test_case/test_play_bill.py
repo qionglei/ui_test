@@ -1,3 +1,4 @@
+import random
 import time
 import traceback
 
@@ -30,6 +31,8 @@ def play_bill_page(request, driver):
     play_bill_page = PlayBillPage(driver)
     request.cls.play_bill_page = play_bill_page
     yield play_bill_page
+    play_bill = PlayBill()
+    play_bill.clear_play_bill()
 
 
 @pytest.fixture(scope='class')
@@ -40,17 +43,23 @@ def init_play_bill(driver):
     """
     try:
         play_bill = PlayBill()
+        play_bill.clear_play_bill()
         program_page = ProgramPage(driver)
         release_page = ReleasePage(driver)
         terminal_page = TerminalPage(driver)
         terminal_list = Terminal_List()
+
+        sn_api = random.randint(10000, 100000000)
+        terminal_list.add_terminal_api(sn_api)
+        release_page.refresh()
         program_list = ProgramList()
         all_play_bill_ids = play_bill.get_play_bill_ids()
         if not all_play_bill_ids:
             all_program_ids, program_folder_id = program_list.get_program_list_ids()
             all_terminal_list = terminal_list.get_terminal_list()
             if not all_terminal_list:
-                terminal_page.add_new_terminal()
+                # terminal_page.add_new_terminal()
+                terminal_list.add_terminal_api(sn_api)
             if not all_program_ids:
                 program_page.switch_to_program_management()
                 program_page.create_general_program()
@@ -64,8 +73,10 @@ def init_play_bill(driver):
                     release_page.maxsize_window()
                     release_page.choose_terminal()
                     release_page.select_all_terminals()
+                    release_page.confirm_terminal_button()
+                    release_page.click_system_icon()
 
-                release_page.confirm_button()
+                # release_page.confirm_button()
                 release_page.release_general_program()
 
                 release_page.set_window_size(*win_size)
@@ -82,8 +93,10 @@ def init_play_bill(driver):
                     release_page.maxsize_window()
                     release_page.choose_terminal()
                     release_page.select_all_terminals()
+                    release_page.confirm_terminal_button()
+                    release_page.click_system_icon()
 
-                release_page.confirm_button()
+                # release_page.confirm_button()
                 release_page.release_general_program()
 
                 release_page.set_window_size(*win_size)
@@ -111,6 +124,7 @@ def generate_one_program(driver,release_page):
         if media_ids == []:
             # 素材上传
             time.sleep(0.3)
+            mediapage.refresh()
             mediapage.switch_to_media_center()
             mediapage.upload_media()
             time.sleep(2)
@@ -125,11 +139,21 @@ def generate_one_program(driver,release_page):
                 release_page.choose_terminal()
 
             with step("选择一个设备"):
-                release_page.choose_one_terminal()
+                # release_page.choose_one_terminal()
+
+                # release_page.choose_terminal()
+                release_page.select_all_terminals()
+                # release_page.confirm_terminal_button()
+                # release_page.click_system_icon()
 
                 time.sleep(6)
             with step("选完设备后，点击确定"):
-                release_page.confirm_release_strategy()
+                # release_page.confirm_release_strategy()
+                release_page.confirm_terminal_button()
+                release_page.click_system_icon()
+
+            with step("发布普通节目"):
+                release_page.release_general_program()
 
         else:
             media_list.delete_all_media()
@@ -142,10 +166,21 @@ def generate_one_program(driver,release_page):
                 release_page.choose_terminal()
 
             with step("选择一个设备"):
-                release_page.choose_one_terminal()
+                # release_page.choose_one_terminal()
 
+                # release_page.choose_terminal()
+                release_page.select_all_terminals()
+                # release_page.confirm_terminal_button()
+                # release_page.click_system_icon()
+
+                time.sleep(6)
             with step("选完设备后，点击确定"):
-                release_page.confirm_release_strategy()
+                # release_page.confirm_release_strategy()
+                release_page.confirm_terminal_button()
+                release_page.click_system_icon()
+
+            with step("发布普通节目"):
+                release_page.release_general_program()
 
 @allure.epic("项目hkc")
 @allure.feature("play bill list")
@@ -154,6 +189,7 @@ def generate_one_program(driver,release_page):
 @pytest.mark.usefixtures("release_page")
 class TestPlayBill:
     release_page = ReleasePage(driver)
+    terminal_list = Terminal_List()
 
     @pytest.mark.run(order=1)
     @allure.title("节目单预览")
@@ -265,6 +301,7 @@ class TestPlayBill:
 
         with step("点击确认按钮"):
             play_bill_page.confirm_copy_button()
+            print("确定按钮，已被点击")
 
         with step("点击暂存按钮"):
             release_page.temporary_storage()
@@ -275,28 +312,52 @@ class TestPlayBill:
     def test_edit_play_bill(self):
         play_bill_page = self.play_bill_page
         release_page = self.release_page
+        terminal_list = self.terminal_list
+        all_terminal = terminal_list.get_terminal_list()
+        print("all_terminal:",all_terminal)
+        sn_api = random.randint(10000,100000000)
+        if all_terminal ==[]:
+            terminal_list.add_terminal_api(sn_api)
 
+        set_up_play_bill = PlayBill()
+        if set_up_play_bill.get_play_bill_ids() != []:
+            set_up_play_bill.clear_play_bill()
+            release_page.refresh()
+
+        all_terminal = terminal_list.get_terminal_list()
+        print("all_terminal---new:", all_terminal)
+
+        time.sleep(5)
         with step("侧边栏切到到发布管理"):
+            release_page.refresh()
             play_bill_page.switch_to_release_management()
 
+        time.sleep(5)
         with step("发布管理中，切到节目单"):
             play_bill_page.switch_to_play_bill()
 
+        time.sleep(5)
         with step("点击节目单引用按钮"):
             play_bill_page.copy_play_bill()
 
+        time.sleep(5)
         with step("点击确认按钮"):
             play_bill_page.confirm_copy_button()
+            print("点击确认按钮成功")
 
+        time.sleep(5)
         with step("点击暂存按钮"):
             release_page.temporary_storage()
 
+        time.sleep(5)
         with step("发布管理中，切到节目单"):
             play_bill_page.switch_to_play_bill()
 
+        time.sleep(5)
         with step("发布管理中，点击编辑按钮"):
             play_bill_page.edit_play_bill()
 
+        time.sleep(5)
         with step("进行发布操作"):
             release_page.release_general_program()
 

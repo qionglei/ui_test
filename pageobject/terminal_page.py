@@ -13,12 +13,15 @@ from allure_commons._allure import step
 
 
 # @pytest.mark.usefixtures("env")
+from data_clean import clear_terminal
+
+
 class TerminalPage(BasePage):
     fixed_terminal_id = "TERMINAL_ID_0001"
     fixed_terminal_name = "TERMINAL_NAME_0001"
 
     def switch_to_terminal_center(self):
-        terminal_center_loca = ('by_xpath,//div[text()=" 设备中心"]')
+        terminal_center_loca = 'by_xpath,//div[text()=" 设备中心"]'
         focus = 'by_xpath,//div[text()=" 设备中心"]/../../.'
         focus_ele = self.get_element(focus)
         # focus_text = focus_ele.text
@@ -164,10 +167,13 @@ class TerminalPage(BasePage):
         terminal_id = "terminal_002"
         fail_toast_loca = ('by_xpath,//p[text()="接入失败：设备已被绑定"]')
         if self.element_exist(fail_toast_loca):
-            self.input_terminal_id(terminal_id)
-            # self.click_terminal_id()
-            time.sleep(0.5)
+            clear_terminal()
             self.click(confirm_bind_terminal_button_loca)
+
+            # self.input_terminal_id(terminal_id)
+            # # self.click_terminal_id()
+            # time.sleep(0.5)
+            # self.click(confirm_bind_terminal_button_loca)
 
             # 如果设备已被绑定，则判断是不是在当前机构-设备列表中
             terminal_list = Terminal_List()
@@ -247,6 +253,8 @@ class TerminalPage(BasePage):
         terminal_org = ('by_xpath,//label[text()="所属机构"]/following::input[1]')
 
     def add_real_terminal(self):
+        clear_terminal()
+        self.refresh()
         try:
             config_terminal = env_conf()
             # print("config_terminal的值是：*****************",config_terminal)
@@ -288,8 +296,33 @@ class TerminalPage(BasePage):
             time.sleep(0.5)
             single = 'by_xpath,//div[text()="单个接入"]'
             # self.element_exist(single)
+            # 如果设备已被绑定，则调用数据库进行清理，再进行绑定操作
             if self.element_exist(single):
-                self.cancel_bind_terminal()
+                # self.cancel_bind_terminal()
+                clear_terminal()
+                self.refresh()
+
+                with step("点击设备接入"):
+                    self.click_bind_terminal()
+                    time.sleep(0.5)
+                with step("输入设备sn码"):
+                    self.input_terminal_id(real_terminal_id)
+                    time.sleep(0.5)
+                with step("输入设备名称"):
+                    self.input_terminal_name(real_terminal_name)
+                    time.sleep(0.5)
+                with step("先点击所属机构"):
+                    self.terminal_org()
+                    time.sleep(0.5)
+                with step("在下拉框展开组织架构"):
+                    self.terminal_org_more()
+                    time.sleep(1)
+                with step("在下拉框进行选择"):
+                    self.select_terminal_org()
+                    time.sleep(1)
+                with step("点击保存按钮"):
+                    self.click_terminal_id()
+                    self.confirm_bind_terminal()
 
         except ElementNotInteractableException as e:
             raise e
@@ -477,10 +510,12 @@ class TerminalPage(BasePage):
         """
         点击组织架构树
         """
+        current_win = self.get_window_size()
         try:
             self.click('by_xpath,//div[@class="org-btn"]/span[text()="组织架构"]')
         except ElementClickInterceptedException as e:
             raise e
+        self.set_window_size(*current_win)
 
     def terminal_group_tab(self):
         self.click('by_xpath,//li[@class="active"]/span')

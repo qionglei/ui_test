@@ -77,7 +77,17 @@ class OrgList:
             }
             requests.post(url=add_url, headers=self.headers, data=json.dumps(data))
 
-# if __name__ == "__main__":
-#     org_list = OrgList()
-#     org_list.clear_all_org()
-#     org_list.add_branch()
+    def get_org_id(self):
+        get_org_id_url = 'https://test.hkciot.com/cuteview/org/get'
+        body = {
+            "cropId": "1751805517940535298",
+        }
+        resp = requests.get(url=get_org_id_url, params=body,headers=self.headers)
+        resp = resp.json()
+        all_org_id = [orgs["id"] for orgs in resp["data"]["allChildrenOrg"]]
+        print(all_org_id[0])
+        return all_org_id[0]
+
+if __name__ == "__main__":
+    org_list = OrgList()
+    org_list.get_org_id()

@@ -169,10 +169,10 @@ class TestMediaCenter:
         # 前提：上传文件
         media_page = self.media_page
         media_page.switch_to_media_center()
-        time.sleep(2)
+        time.sleep(1)
         with step("点击上传按钮"):
             media_page.click_up_load()
-        time.sleep(2)
+        time.sleep(1)
         with step("点击上传文件按钮"):
             media_page.upload_all_files()
         time.sleep(1)

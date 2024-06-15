@@ -441,7 +441,7 @@ class TestProgramManagement:
 
     @allure.title("重新编辑节目")
     @pytest.mark.run(order=16)
-    def test_rename_program(self):
+    def test_reedit_program(self):
         program_page =self.program_page
         size = program_page.get_window_size()
         program_page.maxsize_window()
@@ -475,7 +475,6 @@ class TestProgramManagement:
         with step("点击引用按钮"):
             program_page.program_copy_button()
 
-
         with step("输入引用名称"):
             program_page.program_copy_name("引用后新的名称")
 
@@ -500,11 +499,11 @@ class TestProgramManagement:
             program_page.program_more_button()
 
         with step("点击重命名按钮"):
-            program_page.rename_program()
+            program_page.click_rename_program()
 
         time.sleep(0.5)
         with step("输入新的节目名称"):
-            program_page.program_copy_name("新的节目名称")
+            program_page.rename_program_name("新的节目名称")
 
         with step("点击确定按钮"):
             program_page.confirm_create_program()

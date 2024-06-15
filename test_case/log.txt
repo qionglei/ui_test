@@ -16,3 +16,27 @@
 2024-05-15 14:22:14,118 - config.log_config - INFO - Start print log
 2024-05-15 14:22:14,118 - config.log_config - WARNING - Something maybe fail.
 2024-05-15 14:22:14,118 - config.log_config - INFO - Finish
+2024-06-13 16:28:16,426 - config.log_config - INFO - Start print log
+2024-06-13 16:28:16,429 - config.log_config - WARNING - Something maybe fail.
+2024-06-13 16:28:16,429 - config.log_config - INFO - Finish
+2024-06-13 16:37:58,122 - config.log_config - INFO - Start print log
+2024-06-13 16:37:58,126 - config.log_config - WARNING - Something maybe fail.
+2024-06-13 16:37:58,126 - config.log_config - INFO - Finish
+2024-06-14 10:38:45,185 - config.log_config - INFO - Start print log
+2024-06-14 10:38:45,185 - config.log_config - WARNING - Something maybe fail.
+2024-06-14 10:38:45,185 - config.log_config - INFO - Finish
+2024-06-14 11:51:34,680 - config.log_config - INFO - Start print log
+2024-06-14 11:51:34,687 - config.log_config - WARNING - Something maybe fail.
+2024-06-14 11:51:34,687 - config.log_config - INFO - Finish
+2024-06-15 09:54:11,472 - config.log_config - INFO - Start print log
+2024-06-15 09:54:11,475 - config.log_config - WARNING - Something maybe fail.
+2024-06-15 09:54:11,475 - config.log_config - INFO - Finish
+2024-06-15 10:00:07,338 - config.log_config - INFO - Start print log
+2024-06-15 10:00:07,338 - config.log_config - WARNING - Something maybe fail.
+2024-06-15 10:00:07,338 - config.log_config - INFO - Finish
+2024-06-15 10:01:45,444 - config.log_config - INFO - Start print log
+2024-06-15 10:01:45,445 - config.log_config - WARNING - Something maybe fail.
+2024-06-15 10:01:45,445 - config.log_config - INFO - Finish
+2024-06-15 10:03:24,879 - config.log_config - INFO - Start print log
+2024-06-15 10:03:24,880 - config.log_config - WARNING - Something maybe fail.
+2024-06-15 10:03:24,880 - config.log_config - INFO - Finish

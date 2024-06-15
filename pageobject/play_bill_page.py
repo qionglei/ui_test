@@ -64,9 +64,10 @@ class PlayBillPage(BasePage):
         """
         all_edit_locators = 'by_xpath,//img[@title="编辑"]'
         all_edit_eles = self.get_elements(all_edit_locators)
-        first_edit_ele = all_edit_eles[0]
         if all_edit_eles:
-            ActionChains(self.driver).move_to_element(first_edit_ele).click(first_edit_ele).perform()
+            first_edit_ele = all_edit_eles[0]
+            if all_edit_eles:
+                ActionChains(self.driver).move_to_element(first_edit_ele).click(first_edit_ele).perform()
 
     def expiry_play_bill(self):
         """
@@ -75,10 +76,11 @@ class PlayBillPage(BasePage):
         all_expiry_locator ='by_xpath,//img[@title="失效"]'
         all_expiry_buttons = self.get_elements(all_expiry_locator)
         print("all_expiry_buttons:",all_expiry_buttons)
-        first_expiry_ele = all_expiry_buttons[0]
-        print("first_expiry_ele:",first_expiry_ele)
-        if first_expiry_ele:
-            ActionChains(self.driver).move_to_element(first_expiry_ele).click(first_expiry_ele).perform()
+        if all_expiry_buttons:
+            first_expiry_ele = all_expiry_buttons[0]
+            print("first_expiry_ele:",first_expiry_ele)
+            if first_expiry_ele:
+                ActionChains(self.driver).move_to_element(first_expiry_ele).click(first_expiry_ele).perform()
 
     def confirm_expiry_button(self):
         """
@@ -90,7 +92,8 @@ class PlayBillPage(BasePage):
         """
         引用节目单时，点击确定按钮
         """
-        confirm_copy_locator = 'by_xpath,//span[text()="确定"]'
+        # confirm_copy_locator = 'by_xpath,//span[text()="确定"]'
+        confirm_copy_locator ='by_xpath,//button[@class="el-button el-button--primary"]/span[text()="确定"]'
         self.click(confirm_copy_locator)
 
     def close_copy_alert(self):
@@ -118,9 +121,10 @@ class PlayBillPage(BasePage):
         """
         all_delete_locators = 'by_xpath,//img[@title="删除"]'
         all_delete_buttons = self.get_elements(all_delete_locators)
-        first_delete_ele = all_delete_buttons[0]
-        if first_delete_ele:
-            ActionChains(self.driver).move_to_element(first_delete_ele).click(first_delete_ele).perform()
+        if all_delete_buttons:
+            first_delete_ele = all_delete_buttons[0]
+            if first_delete_ele:
+                ActionChains(self.driver).move_to_element(first_delete_ele).click(first_delete_ele).perform()
 
     def click_filter_status(self):
         """

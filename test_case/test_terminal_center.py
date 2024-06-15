@@ -9,6 +9,7 @@ from common.set_up_org import OrgList
 from common.set_up_terminal_list import Terminal_List
 from pageobject.system_page import SystemPage
 from pageobject.terminal_page import TerminalPage
+from data_clean import clear_terminal
 
 
 @pytest.fixture(scope='class')
@@ -31,6 +32,7 @@ def clear_terminal_list():
     # list_t.login_cookie()
     ids = list_t.get_terminal_list()
     list_t.delete_terminal(ids)
+    clear_terminal()
 
 @pytest.fixture(scope="class",autouse=True)
 def set_up_org():
@@ -112,7 +114,7 @@ class TestTerminalCenter:
         terminal_page.refresh()
 
     # @pytest.mark.usefixtures('terminal_set_up')
-    @pytest.mark.usefixtures('clear_terminal_list')
+    # @pytest.mark.usefixtures('clear_terminal_list')
     @allure.title("在设备中心，点击更多按钮")
     @pytest.mark.run(order=2)
     def test_click_more_button(self):
@@ -168,7 +170,7 @@ class TestTerminalCenter:
     @pytest.mark.usefixtures('clear_terminal_list')
     @allure.title("下发关机指令")
     @pytest.mark.run(order=5)
-    def test_turn_off_terminal(self):
+    def test_reboot_terminal(self):
         terminal_page = self.terminal_page
         terminal_page.refresh()
         sys_page = self.sys_page
@@ -193,6 +195,14 @@ class TestTerminalCenter:
         #     terminal_page.real_time_monitor()
 
         time.sleep(2)
+        with step("下发重启指令"):
+            terminal_page.click_more_button()
+            terminal_page.restart_terminal()
+
+        time.sleep(3)
+        # with step("下发关机指令"):
+        #     terminal_page.turn_off_terminal()
+
         with step("下发插播字幕指令"):
             terminal_page.insert_subtitle()
         subtitle_position_loca = ('by_xapth,//label[text()="播放位置"]')
@@ -207,6 +217,7 @@ class TestTerminalCenter:
                     terminal_page.insert_subtitle_submit()
         except NoSuchElementException as e:
             print("非真实设备，无法发送插播字幕")
+            terminal_page.refresh()
         #
         # time.sleep(2)
         # with step("下发节目克隆指令"):
@@ -216,14 +227,7 @@ class TestTerminalCenter:
         #         with step("关闭节目克隆弹框"):
         #             terminal_page.cancel_program_clone()
 
-        time.sleep(2)
-        with step("下发重启指令"):
-            terminal_page.click_more_button()
-            terminal_page.restart_terminal()
 
-        time.sleep(3)
-        # with step("下发关机指令"):
-        #     terminal_page.turn_off_terminal()
         with step("收起更多弹框"):
             terminal_page.click_more_button()
 
@@ -456,7 +460,7 @@ class TestTerminalCenter:
                 with step("点击保存按钮"):
                     terminal_page.insert_subtitle_submit()
 
-    @pytest.mark.usefixtures('clear_terminal_list')
+    # @pytest.mark.usefixtures('clear_terminal_list')
     @allure.title("查看设备信息")
     @pytest.mark.run(order=13)
     def test_terminal_info(self):

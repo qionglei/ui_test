@@ -1,8 +1,12 @@
 import json
+import time
 
 import requests
 
 from common.get_cookie import login_cookie,headers
+from common.set_up_org import OrgList
+
+org_list = OrgList()
 
 
 class Terminal_List:
@@ -93,8 +97,26 @@ class Terminal_List:
         names = [record['name'] for record in res['data']['records']]
         # print("拿到的ids：", ids)
         return names
+
+    def add_terminal_api(self,sn):
+
+        add_terminal_url ='https://test.hkciot.com/cuteview/terminal/join'
+
+        body = {
+                "cropId": "1751805517940535298",
+                "name": sn,
+                "orgId": org_list.get_org_id(),
+                "tagIds": [],
+                "sn": sn
+            }
+
+        response =requests.post(url=add_terminal_url,data =json.dumps(body),headers=self.headers)
+        print("响应数据是：",response.json())
+        print("org_id的值是：",org_list.get_org_id())
+
+
 #
 # if __name__ == '__main__':
 #     list_t = Terminal_List()
 #     ids = list_t.get_terminal_list()
-#     list_t.delete_terminal(ids)
+#     list_t.add_terminal_api("123458866865578")

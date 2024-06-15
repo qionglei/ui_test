@@ -995,7 +995,7 @@ class TestReleaseStrategy:
             print("拿到的第一个的节目名名称为", program_name)
             time.sleep(0.5)
         with step("鼠标hover到一个节目上面"):
-            mediapage.hover_to_media()
+            release_page.hover_program_and_choice()
             time.sleep(3)
         with step("选择一个节目"):
             release_page.choose_program_and_choice()
@@ -1186,11 +1186,18 @@ class TestReleaseStrategy:
             release_page.set_label_name("label_001")
             release_page.save_program_edit()
             print("新增标签成功")
+            with step("重新打开节目编排弹框："):
+                release_page.confirm_button()
+                release_page.program_edit()
+
             with step("鼠标hover到第一个标签上面"):
                 release_page.hover_to_first_edit_label()
             with step("删除第一个label"):
                 release_page.delete_first_label()
         else:
+            with step("重新打开节目编排弹框："):
+                release_page.confirm_button()
+                release_page.program_edit()
             with step("鼠标hover到第一个标签上面"):
                 release_page.hover_to_first_edit_label()
             with step("删除第一个label"):
