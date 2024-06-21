@@ -113,31 +113,6 @@ class TestTerminalCenter:
 
         terminal_page.refresh()
 
-    # @pytest.mark.usefixtures('terminal_set_up')
-    # @pytest.mark.usefixtures('clear_terminal_list')
-    @allure.title("在设备中心，点击更多按钮")
-    @pytest.mark.run(order=2)
-    def test_click_more_button(self):
-        terminal_page = self.terminal_page
-        # terminal_page.switch_to_terminal_center()
-        # sql_execute()
-        terminal_page.refresh()
-        time.sleep(0.5)
-        terminal_page.add_new_terminal()
-        # all_terminal_ids = terminal_page.all_terminal_ids()
-
-        with step("点击更多按钮"):
-            terminal_page.click_more_button()
-        all_func = terminal_page.more_function()
-        print("获取；", all_func)
-        all_fixed_functions = ["关机", "重启", "播放", "停止", "插播字幕", "节目克隆"]
-        try:
-            for fixed_function in all_fixed_functions:
-                assert fixed_function in all_func
-        except AssertionError as e:
-            raise e
-        finally:
-            terminal_page.refresh()
 
     @pytest.mark.skip("fail,定位下拉框有点问题")
     @allure.title("设备设置中重新选择机构")
@@ -166,103 +141,6 @@ class TestTerminalCenter:
         terminal_page = self.terminal_page
         terminal_page.rechange_terminal_label()
 
-    # @pytest.mark.skip(reason="这个功能谨慎操作")
-    @pytest.mark.usefixtures('clear_terminal_list')
-    @allure.title("下发关机指令")
-    @pytest.mark.run(order=5)
-    def test_reboot_terminal(self):
-        terminal_page = self.terminal_page
-        terminal_page.refresh()
-        sys_page = self.sys_page
-        # sql_execute()
-        with step("两个前提：1、新增一台机器 2、新增一个门店  2、点击更多按钮 "):
-            # sys_page.switch_to_system_management()
-            # sys_page.add_new_shop("test门店")
-            terminal_page.switch_to_terminal_center()
-            terminal_page.add_real_terminal()
-            terminal_page.click_more_button()
-
-        time.sleep(2)
-        with step("下发播放指令"):
-            terminal_page.play_terminal()
-
-        time.sleep(2)
-        with step("下发停止指令"):
-            terminal_page.stop_terminal()
-
-        # time.sleep(2)
-        # with step("下发实时监控指令"):
-        #     terminal_page.real_time_monitor()
-
-        time.sleep(2)
-        with step("下发重启指令"):
-            terminal_page.click_more_button()
-            terminal_page.restart_terminal()
-
-        time.sleep(3)
-        # with step("下发关机指令"):
-        #     terminal_page.turn_off_terminal()
-
-        with step("下发插播字幕指令"):
-            terminal_page.insert_subtitle()
-        subtitle_position_loca = ('by_xapth,//label[text()="播放位置"]')
-        try:
-            if terminal_page.element_exist(subtitle_position_loca):
-                # with step("先点击插播内容弹框"):
-                #     terminal_page.click_insert_subtitle_text()
-                time.sleep(0.5)
-                with step("发送随机弹幕"):
-                    terminal_page.input_insert_subtitle_text("自动化弹幕ing....")
-                with step("点击保存按钮"):
-                    terminal_page.insert_subtitle_submit()
-        except NoSuchElementException as e:
-            print("非真实设备，无法发送插播字幕")
-            terminal_page.refresh()
-        #
-        # time.sleep(2)
-        # with step("下发节目克隆指令"):
-        #     terminal_page.program_clone()
-        #     clone_ele = terminal_page.element_exist('by_xpath,//input[@placeholder="请搜索克隆设备"]')
-        #     if clone_ele:
-        #         with step("关闭节目克隆弹框"):
-        #             terminal_page.cancel_program_clone()
-
-
-        with step("收起更多弹框"):
-            terminal_page.click_more_button()
-
-    @pytest.mark.usefixtures('clear_terminal_list')
-    @allure.title("插播字幕，输入随机内容")
-    @pytest.mark.run(order=6)
-    def test_insert_subtile_random_text(self):
-        terminal_page = self.terminal_page
-        random_text = random.randint(999, 9999999999)
-        # sql_execute()
-        with step("各种前提："):
-            time.sleep(0.5)
-            terminal_page.add_real_terminal()
-            time.sleep(0.5)
-            terminal_page.click_more_button()
-            time.sleep(0.5)
-            terminal_page.insert_subtitle()
-            time.sleep(0.5)
-        subtitle_position_loca = ('by_xapth,//label[text()="播放位置"]')
-        try:
-            if terminal_page.element_exist(subtitle_position_loca):
-                # with step("先点击插播内容弹框"):
-                #     terminal_page.click_insert_subtitle_text()
-                time.sleep(0.5)
-                with step("输入随机的插播内容"):
-                    terminal_page.input_insert_subtitle_text(random_text)
-                with step("点击保存按钮"):
-                    terminal_page.insert_subtitle_submit()
-        except NoSuchElementException as e:
-            print("非真实设备，无法发送插播字幕")
-            with step("收起更多弹框"):
-                terminal_page.click_more_button()
-
-        finally:
-            terminal_page.refresh()
 
     @pytest.mark.usefixtures('clear_terminal_list')
     @allure.title("发送插播字幕，位置：中")
@@ -460,25 +338,6 @@ class TestTerminalCenter:
                 with step("点击保存按钮"):
                     terminal_page.insert_subtitle_submit()
 
-    # @pytest.mark.usefixtures('clear_terminal_list')
-    @allure.title("查看设备信息")
-    @pytest.mark.run(order=13)
-    def test_terminal_info(self):
-        # sql_execute()
-        terminal_page = self.terminal_page
-        terminal_page.switch_to_terminal_center()
-        terminal_page.add_new_terminal()
-        try:
-            with step("点击设备id，查看设备信息"):
-                terminal_page.terminal_info()
-
-            info_locator = 'by_xpath,//span[text()="设备信息"]'
-            assert terminal_page.element_exist(info_locator)
-
-            with step("关闭设备信息弹框"):
-                terminal_page.close_terminal_info()
-        except:
-            raise
 
     @allure.title("查看设备中心-组织架构树，折叠和展开所有门店")
     @pytest.mark.run(order=14)
@@ -746,3 +605,151 @@ class TestTerminalCenter:
         time.sleep(0.5)
         with step("删除弹框上面，点击确定按钮"):
             terminal_page.success_delete_terminal()
+
+
+    # @pytest.mark.usefixtures('clear_terminal_list')
+    @allure.title("查看设备信息")
+    @pytest.mark.run(order=27)
+    def test_terminal_info(self):
+        # sql_execute()
+        terminal_page = self.terminal_page
+        terminal_page.switch_to_terminal_center()
+        terminal_page.add_new_terminal()
+        try:
+            with step("点击设备id，查看设备信息"):
+                terminal_page.terminal_info()
+
+            info_locator = 'by_xpath,//span[text()="设备信息"]'
+            assert terminal_page.element_exist(info_locator)
+
+            with step("关闭设备信息弹框"):
+                terminal_page.close_terminal_info()
+        except:
+            raise
+
+
+    @pytest.mark.usefixtures('clear_terminal_list')
+    @allure.title("插播字幕，输入随机内容")
+    @pytest.mark.run(order=28)
+    def test_insert_subtile_random_text(self):
+        terminal_page = self.terminal_page
+        random_text = random.randint(999, 9999999999)
+        # sql_execute()
+        with step("各种前提："):
+            time.sleep(0.5)
+            terminal_page.add_real_terminal()
+            time.sleep(0.5)
+            terminal_page.click_more_button()
+            time.sleep(0.5)
+            terminal_page.insert_subtitle()
+            time.sleep(0.5)
+        subtitle_position_loca = ('by_xapth,//label[text()="播放位置"]')
+        try:
+            if terminal_page.element_exist(subtitle_position_loca):
+                # with step("先点击插播内容弹框"):
+                #     terminal_page.click_insert_subtitle_text()
+                time.sleep(0.5)
+                with step("输入随机的插播内容"):
+                    terminal_page.input_insert_subtitle_text(random_text)
+                with step("点击保存按钮"):
+                    terminal_page.insert_subtitle_submit()
+        except NoSuchElementException as e:
+            print("非真实设备，无法发送插播字幕")
+            with step("收起更多弹框"):
+                terminal_page.click_more_button()
+
+        finally:
+            terminal_page.refresh()
+
+
+    # @pytest.mark.usefixtures('terminal_set_up')
+    # @pytest.mark.usefixtures('clear_terminal_list')
+    @allure.title("在设备中心，点击更多按钮")
+    @pytest.mark.run(order=29)
+    def test_click_more_button(self):
+        terminal_page = self.terminal_page
+        # terminal_page.switch_to_terminal_center()
+        # sql_execute()
+        # terminal_page.refresh()
+        # time.sleep(0.5)
+        terminal_page.add_new_terminal()
+        # all_terminal_ids = terminal_page.all_terminal_ids()
+
+        with step("点击更多按钮"):
+            terminal_page.click_more_button()
+        all_func = terminal_page.more_function()
+        print("获取；", all_func)
+        all_fixed_functions = ["关机", "重启", "播放", "停止", "插播字幕", "节目克隆"]
+        try:
+            for fixed_function in all_fixed_functions:
+                assert fixed_function in all_func
+        except AssertionError as e:
+            raise e
+        finally:
+            terminal_page.refresh()
+
+    # @pytest.mark.skip(reason="这个功能谨慎操作")
+    @pytest.mark.usefixtures('clear_terminal_list')
+    @allure.title("下发关机指令")
+    @pytest.mark.run(order=30)
+    def test_reboot_terminal(self):
+        terminal_page = self.terminal_page
+        terminal_page.refresh()
+        sys_page = self.sys_page
+        # sql_execute()
+        with step("两个前提：1、新增一台机器 2、新增一个门店  2、点击更多按钮 "):
+            # sys_page.switch_to_system_management()
+            # sys_page.add_new_shop("test门店")
+            terminal_page.switch_to_terminal_center()
+            terminal_page.add_real_terminal()
+            terminal_page.click_more_button()
+
+        time.sleep(2)
+        with step("下发播放指令"):
+            terminal_page.play_terminal()
+
+        time.sleep(2)
+        with step("下发停止指令"):
+            terminal_page.stop_terminal()
+
+        # time.sleep(2)
+        # with step("下发实时监控指令"):
+        #     terminal_page.real_time_monitor()
+
+        time.sleep(2)
+        with step("下发重启指令"):
+            terminal_page.click_more_button()
+            terminal_page.restart_terminal()
+
+        time.sleep(3)
+        # with step("下发关机指令"):
+        #     terminal_page.turn_off_terminal()
+
+        with step("下发插播字幕指令"):
+            terminal_page.insert_subtitle()
+        subtitle_position_loca = ('by_xapth,//label[text()="播放位置"]')
+        try:
+            if terminal_page.element_exist(subtitle_position_loca):
+                # with step("先点击插播内容弹框"):
+                #     terminal_page.click_insert_subtitle_text()
+                time.sleep(0.5)
+                with step("发送随机弹幕"):
+                    terminal_page.input_insert_subtitle_text("自动化弹幕ing....")
+                with step("点击保存按钮"):
+                    terminal_page.insert_subtitle_submit()
+        except NoSuchElementException as e:
+            print("非真实设备，无法发送插播字幕")
+            terminal_page.refresh()
+        #
+        # time.sleep(2)
+        # with step("下发节目克隆指令"):
+        #     terminal_page.program_clone()
+        #     clone_ele = terminal_page.element_exist('by_xpath,//input[@placeholder="请搜索克隆设备"]')
+        #     if clone_ele:
+        #         with step("关闭节目克隆弹框"):
+        #             terminal_page.cancel_program_clone()
+
+
+        with step("收起更多弹框"):
+            terminal_page.click_more_button()
+

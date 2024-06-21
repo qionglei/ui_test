@@ -61,9 +61,9 @@ class TestMediaCenter:
         except:
             raise
     filedatas = [
-        "D:\\ui\\data\\test001.jpeg",
-        "D:\\ui\\data\\test_mp4.mp4",
-        "D:\\ui\\data\\test_mp3.mp3"
+        "D:\\git\\ui_test\\data\\test001.jpeg",
+        "D:\\git\\ui_test\\data\\test_mp4.mp4",
+        "D:\\git\\ui_test\\data\\test_mp3.mp3"
     ]
 
     @pytest.mark.run(order=3)
@@ -77,7 +77,7 @@ class TestMediaCenter:
         with step("点击上传按钮"):
             media_page.click_up_load()
         time.sleep(2)
-        # filepath = r"D:\\ui\\data\\test001.jpeg"
+        # filepath = r"D:\\git\\ui_test\\data\\test001.jpeg"
         with step("点击上传文件按钮"):
             media_page.upload_media_file(filedatas)
         # time.sleep(8)
@@ -103,7 +103,7 @@ class TestMediaCenter:
         with step("选择文件类型为背景"):
             media_page.choose_file_type()
             media_page.upload_media_background()
-        filepath = r"D:\\ui\\data\\test001.jpeg"
+        filepath = r"D:\\git\\ui_test\\data\\test001.jpeg"
         with step("点击上传文件按钮"):
             media_page.upload_media_file(filepath)
         # time.sleep(8)
@@ -128,7 +128,7 @@ class TestMediaCenter:
         with step("选择文件类型为背景"):
             media_page.choose_file_type()
             media_page.upload_screen_label()
-        filepath = r"D:\\ui\\data\\test001.jpeg"
+        filepath = r"D:\\git\\ui_test\\data\\test001.jpeg"
         with step("点击上传文件按钮"):
             media_page.upload_media_file(filepath)
         # time.sleep(8)
@@ -151,7 +151,7 @@ class TestMediaCenter:
             media_page.switch_to_media_center()
             media_page.click_up_load()
         time.sleep(2)
-        # filepath = r"D:\\ui\\data\\test001.jpeg"
+        # filepath = r"D:\\git\\ui_test\\data\\test001.jpeg"
         with step("点击上传文件按钮"):
             media_page.upload_all_files()
         time.sleep(15)
@@ -212,7 +212,7 @@ class TestMediaCenter:
         with step("点击预览按钮"):
             media_page.media_preview()
 
-        time.sleep(3)
+        time.sleep(1)
         with step("关闭预览按钮"):
             media_page.close_preview()
 

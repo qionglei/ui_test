@@ -34,8 +34,13 @@ def play_bill_page(request, driver):
     play_bill = PlayBill()
     play_bill.clear_play_bill()
 
+@pytest.fixture(scope='class',autouse=True)
+def init_clear_all_play_bill_list():
+    play_bill = PlayBill()
+    play_bill.clear_play_bill()
 
-@pytest.fixture(scope='class')
+
+@pytest.fixture(scope='class',autouse=True)
 def init_play_bill(driver):
     """
     初始化节目单，如果没有节目单，则创建普通节目，进行发布操作
@@ -146,7 +151,7 @@ def generate_one_program(driver,release_page):
                 # release_page.confirm_terminal_button()
                 # release_page.click_system_icon()
 
-                time.sleep(6)
+                # time.sleep(6)
             with step("选完设备后，点击确定"):
                 # release_page.confirm_release_strategy()
                 release_page.confirm_terminal_button()
@@ -173,7 +178,7 @@ def generate_one_program(driver,release_page):
                 # release_page.confirm_terminal_button()
                 # release_page.click_system_icon()
 
-                time.sleep(6)
+                # time.sleep(6)
             with step("选完设备后，点击确定"):
                 # release_page.confirm_release_strategy()
                 release_page.confirm_terminal_button()
@@ -211,7 +216,7 @@ class TestPlayBill:
             play_bill_page.refresh()
 
     @pytest.mark.run(order=2)
-    # @pytest.mark.usefixtures("generate_one_program")
+    @pytest.mark.usefixtures("generate_one_program")
     @allure.title("取消节目单引用")
     def test_cancel_copy_play_bill(self):
         play_bill_page = self.play_bill_page
@@ -283,83 +288,7 @@ class TestPlayBill:
         with step("点击暂存按钮"):
             release_page.release_general_program()
 
-    @pytest.mark.run(order=5)
-    @allure.title("将引用的节目单进行暂存操作")
-    # @pytest.mark.usefixtures("generate_one_program")
-    def test_copy_play_bill_temporary_storage(self):
-        play_bill_page = self.play_bill_page
-        release_page = self.release_page
 
-        with step("侧边栏切到到发布管理"):
-            play_bill_page.switch_to_release_management()
-
-        with step("发布管理中，切到节目单"):
-            play_bill_page.switch_to_play_bill()
-
-        with step("点击节目单引用按钮"):
-            play_bill_page.copy_play_bill()
-
-        with step("点击确认按钮"):
-            play_bill_page.confirm_copy_button()
-            print("确定按钮，已被点击")
-
-        with step("点击暂存按钮"):
-            release_page.temporary_storage()
-
-    @pytest.mark.run(order=6)
-    @allure.title("进行节目单的编辑")
-    @pytest.mark.usefixtures("generate_one_program")
-    def test_edit_play_bill(self):
-        play_bill_page = self.play_bill_page
-        release_page = self.release_page
-        terminal_list = self.terminal_list
-        all_terminal = terminal_list.get_terminal_list()
-        print("all_terminal:",all_terminal)
-        sn_api = random.randint(10000,100000000)
-        if all_terminal ==[]:
-            terminal_list.add_terminal_api(sn_api)
-
-        set_up_play_bill = PlayBill()
-        if set_up_play_bill.get_play_bill_ids() != []:
-            set_up_play_bill.clear_play_bill()
-            release_page.refresh()
-
-        all_terminal = terminal_list.get_terminal_list()
-        print("all_terminal---new:", all_terminal)
-
-        time.sleep(5)
-        with step("侧边栏切到到发布管理"):
-            release_page.refresh()
-            play_bill_page.switch_to_release_management()
-
-        time.sleep(5)
-        with step("发布管理中，切到节目单"):
-            play_bill_page.switch_to_play_bill()
-
-        time.sleep(5)
-        with step("点击节目单引用按钮"):
-            play_bill_page.copy_play_bill()
-
-        time.sleep(5)
-        with step("点击确认按钮"):
-            play_bill_page.confirm_copy_button()
-            print("点击确认按钮成功")
-
-        time.sleep(5)
-        with step("点击暂存按钮"):
-            release_page.temporary_storage()
-
-        time.sleep(5)
-        with step("发布管理中，切到节目单"):
-            play_bill_page.switch_to_play_bill()
-
-        time.sleep(5)
-        with step("发布管理中，点击编辑按钮"):
-            play_bill_page.edit_play_bill()
-
-        time.sleep(5)
-        with step("进行发布操作"):
-            release_page.release_general_program()
 
     @pytest.mark.run(order=7)
     @allure.title("取消节目单失效")
@@ -533,4 +462,84 @@ class TestPlayBill:
         with step("进行已失效状态过滤"):
             play_bill_page.click_filter_status()
             play_bill_page.filter_disabled_status()
+
+    @pytest.mark.run(order=17)
+    @allure.title("将引用的节目单进行暂存操作")
+    # @pytest.mark.usefixtures("generate_one_program")
+    def test_copy_play_bill_temporary_storage(self):
+        play_bill_page = self.play_bill_page
+        release_page = self.release_page
+
+        with step("侧边栏切到到发布管理"):
+            play_bill_page.switch_to_release_management()
+
+        with step("发布管理中，切到节目单"):
+            play_bill_page.switch_to_play_bill()
+
+        with step("点击节目单引用按钮"):
+            play_bill_page.copy_play_bill()
+
+        with step("点击确认按钮"):
+            play_bill_page.confirm_copy_button()
+            print("确定按钮，已被点击")
+
+        with step("点击暂存按钮"):
+            release_page.temporary_storage()
+
+    @pytest.mark.run(order=18)
+    @allure.title("进行节目单的编辑")
+    @pytest.mark.usefixtures("init_clear_all_play_bill_list")
+    @pytest.mark.usefixtures("generate_one_program")
+    def test_edit_play_bill(self):
+        play_bill_page = self.play_bill_page
+        release_page = self.release_page
+        terminal_list = self.terminal_list
+        all_terminal = terminal_list.get_terminal_list()
+        print("all_terminal:",all_terminal)
+        sn_api = random.randint(10000,100000000)
+        if all_terminal ==[]:
+            terminal_list.add_terminal_api(sn_api)
+
+        set_up_play_bill = PlayBill()
+        if set_up_play_bill.get_play_bill_ids() != []:
+            set_up_play_bill.clear_play_bill()
+            release_page.refresh()
+
+        all_terminal = terminal_list.get_terminal_list()
+        print("all_terminal---new:", all_terminal)
+
+        time.sleep(5)
+        with step("侧边栏切到到发布管理"):
+            release_page.refresh()
+            play_bill_page.switch_to_release_management()
+
+        time.sleep(5)
+        with step("发布管理中，切到节目单"):
+            play_bill_page.switch_to_play_bill()
+
+        time.sleep(5)
+        with step("点击节目单引用按钮"):
+            play_bill_page.copy_play_bill()
+
+        time.sleep(5)
+        with step("点击确认按钮"):
+            play_bill_page.confirm_copy_button()
+            print("点击确认按钮成功")
+
+        time.sleep(5)
+        with step("点击暂存按钮"):
+            release_page.temporary_storage()
+
+        time.sleep(5)
+        with step("发布管理中，切到节目单"):
+            play_bill_page.switch_to_play_bill()
+
+        time.sleep(5)
+        with step("发布管理中，点击编辑按钮"):
+            play_bill_page.edit_play_bill()
+
+        time.sleep(5)
+        with step("进行发布操作"):
+            release_page.release_general_program()
+
 

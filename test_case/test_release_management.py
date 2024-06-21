@@ -411,7 +411,7 @@ class TestReleaseStrategy:
         with step("切换到发布管理tab上"):
             release_page.switch_to_release_management()
 
-        time.sleep(0.3)
+        time.sleep(0.5)
         with step("点击选设备"):
             release_page.choose_terminal()
 
@@ -479,7 +479,10 @@ class TestReleaseStrategy:
     @pytest.mark.run(order=19)
     def test_collapsible_all_org(self, driver):
         release_page = self.release_page
+        size = release_page.get_window_size()
+        print("current size is: ",size)
         release_page.maxsize_window()
+        # release_page.set_window_size(1050,1000)
         release_page.refresh()
 
         with step("切换到发布管理tab上"):
@@ -492,9 +495,11 @@ class TestReleaseStrategy:
         with step("点击选择全部机构"):
             release_page.select_all_org()
 
-        time.sleep(3)
+        # time.sleep(3)
         with step("点击选择折叠机构"):
             release_page.select_all_org()
+
+        # release_page.set_window_size(*size)
 
     @allure.title("取消选择所有的机构")
     @pytest.mark.run(order=20)

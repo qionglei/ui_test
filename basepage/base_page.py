@@ -57,12 +57,14 @@ class BasePage(object):
         """
         窗口最大化
         """
+        self.driver.maximize_window()
         current_window_size = self.get_window_size()
-        fixed_window = (1050, 1000)
+        # print("page:current_window_size",current_window_size)
+        fixed_window = (1722, 1034)
         if current_window_size < fixed_window:
             self.driver.maximize_window()
         else:
-            self.set_window_size(1050,1000)
+            self.set_window_size(1722, 1034)
 
     def minimize_window(self):
         """

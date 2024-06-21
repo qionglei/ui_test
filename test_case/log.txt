@@ -40,3 +40,15 @@
 2024-06-15 10:03:24,879 - config.log_config - INFO - Start print log
 2024-06-15 10:03:24,880 - config.log_config - WARNING - Something maybe fail.
 2024-06-15 10:03:24,880 - config.log_config - INFO - Finish
+2024-06-15 17:00:34,819 - config.log_config - INFO - Start print log
+2024-06-15 17:00:34,825 - config.log_config - WARNING - Something maybe fail.
+2024-06-15 17:00:34,825 - config.log_config - INFO - Finish
+2024-06-15 17:44:24,288 - config.log_config - INFO - Start print log
+2024-06-15 17:44:24,288 - config.log_config - WARNING - Something maybe fail.
+2024-06-15 17:44:24,288 - config.log_config - INFO - Finish
+2024-06-17 17:03:10,229 - config.log_config - INFO - Start print log
+2024-06-17 17:03:10,232 - config.log_config - WARNING - Something maybe fail.
+2024-06-17 17:03:10,232 - config.log_config - INFO - Finish
+2024-06-18 10:26:49,843 - config.log_config - INFO - Start print log
+2024-06-18 10:26:49,844 - config.log_config - WARNING - Something maybe fail.
+2024-06-18 10:26:49,844 - config.log_config - INFO - Finish

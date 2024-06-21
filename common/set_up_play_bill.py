@@ -22,7 +22,7 @@ class PlayBill:
         reponse = requests.post(url=base_url, headers=self.headers, data=json.dumps(body))
         resp = reponse.json()
 
-        play_bill_ids = [ids["name"] for ids in resp["data"]["records"]]
+        play_bill_ids = [ids["id"] for ids in resp["data"]["records"]]
         # print("获取所有的节目单id")
 
         return play_bill_ids
@@ -30,17 +30,13 @@ class PlayBill:
     def clear_play_bill(self):
         clear_base_url ='https://test.hkciot.com/cuteview/play-bill/delete'
         all_ids  = self.get_play_bill_ids()
-        # print("所有的节目单id：",all_ids)
-        if all_ids:
-
-            # first_id = all_ids[0]
-            # print(first_id)
-
+        for ids in range(0,len(all_ids)):
+            id = all_ids[ids]
             body = {
-                    'ids':all_ids
+                "ids": [id]
             }
-
-            reponse =requests.post(url=clear_base_url,headers=self.headers,data=json.dumps(body))
+            data = json.dumps(body)
+            reponse = requests.post(url=clear_base_url, headers=self.headers, data=json.dumps(body))
 
 # if __name__ == "__main__":
 #     play_bill_list = PlayBill()
