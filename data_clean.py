@@ -110,8 +110,9 @@ def clear_terminal():
         connection.begin()
         # 定义要执行的SQL语句列表
         sql_statements = [
-            f"DELETE FROM terminal WHERE sn = '{real_terminal_id}",
-            "DELETE FROM terminal WHERE crop_id = '1751805517940535298'",]
+            f"DELETE FROM terminal WHERE sn = {real_terminal_id}",
+            "DELETE FROM terminal WHERE crop_id = '1751805517940535298'",
+            "DELETE FROM terminal WHERE sn = 'TERMINAL_ID_0001'",]
 
         # 遍历SQL语句列表，依次执行每条语句
         for statement in sql_statements:

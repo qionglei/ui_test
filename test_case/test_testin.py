@@ -22,7 +22,7 @@ class TestTestIn:
         # self.driver.close()
     '''利用excel导入登录测试数据'''
 
-    @pytest.mark.parametrize('case', read_excel(r'D:\ui\data\data.xlsx', 'login'))
+    @pytest.mark.parametrize('case', read_excel(r'D:\git\ui_test\data\data.xlsx', 'login'))
     @allure.title("登录成功")
     def test_01_login(self, case):
         """测试登录模块"""

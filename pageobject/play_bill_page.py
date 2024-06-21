@@ -34,7 +34,7 @@ class PlayBillPage(BasePage):
         """
         在发布管理tab上，切到节目单上
         """
-        play_bill_locator = 'by_xpath,//div[@class="title" and text()="节目单"]'
+        play_bill_locator = 'by_xpath,//div[@class="item active"]/img'
 
         self.click(play_bill_locator)
 
@@ -44,8 +44,8 @@ class PlayBillPage(BasePage):
         """
         all_preview_icons = 'by_xpath,//img[@title="查看"]'
         all_preview_icon_buttons = self.get_elements(all_preview_icons)
-        first_preview_icon =all_preview_icon_buttons[0]
-        if first_preview_icon:
+        if all_preview_icon_buttons:
+            first_preview_icon =all_preview_icon_buttons[0]
             ActionChains(self.driver).move_to_element(first_preview_icon).click(first_preview_icon).perform()
 
     def copy_play_bill(self):
@@ -54,8 +54,8 @@ class PlayBillPage(BasePage):
         """
         all_copy_locators = 'by_xpath,//img[@title="引用"]'
         all_copy_eles = self.get_elements(all_copy_locators)
-        first_copy_ele = all_copy_eles[0]
-        if first_copy_ele:
+        if all_copy_eles:
+            first_copy_ele = all_copy_eles[0]
             ActionChains(self.driver).move_to_element(first_copy_ele).click(first_copy_ele).perform()
 
     def edit_play_bill(self):

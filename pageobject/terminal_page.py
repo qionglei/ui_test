@@ -41,7 +41,8 @@ class TerminalPage(BasePage):
         # 进入设备中心
         try:
             self.switch_to_terminal_center()
-            time.sleep(0.5)
+            # self.refresh()
+            # time.sleep(0.5)
             with step("点击设备接入"):
                 self.click_bind_terminal()
             time.sleep(0.5)
@@ -129,7 +130,7 @@ class TerminalPage(BasePage):
         """
         点击请选择按钮
         """
-        terminal_org_loca = ('by_xpath,//div[@class="el-form-item__content"]//input[@placeholder="请选择"]')
+        terminal_org_loca = ('by_xpath,//label[text()="归属机构"]/..//input[@placeholder="请选择"]')
         self.click(terminal_org_loca)
 
     def terminal_org_more(self):

@@ -20,7 +20,7 @@ def login_page(request, driver):
 @pytest.mark.usefixtures("env")
 class TestLogin:
     @pytest.mark.run(order=1)
-    @pytest.mark.parametrize('case', read_excel(r'D:\ui\data\data.xlsx', 'login'))
+    @pytest.mark.parametrize('case', read_excel(r'D:\git\ui_test\data\data.xlsx', 'login'))
     @allure.title("登录成功")
     def test_login_ddt(self, case):
         """测试登录模块"""
@@ -39,7 +39,7 @@ class TestLogin:
         sleep(0.5)
         login_page.click_personal_logo()
 
-    # @pytest.mark.parametrize('case', read_excel(r'D:\ui\data\data.xlsx', 'login'))
+    # @pytest.mark.parametrize('case', read_excel(r'D:\git\ui_test\data\data.xlsx', 'login'))
     # @allure.title("登录成功")
     # def test_01_login(self, case):
     #     """测试登录模块"""

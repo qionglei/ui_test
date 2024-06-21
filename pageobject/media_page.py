@@ -18,32 +18,35 @@ class MediaPage(BasePage):
         :return:
         """
         time.sleep(0.3)
-        media_center_locator = 'by_xpath,//div[text()=" 素材中心"]'
+        try:
+            media_center_locator = 'by_xpath,//div[text()=" 素材中心"]'
 
-        clickable_ele = self.get_element('by_xpath,//div[text()=" 素材中心"]/../..')
-        get_classmethod = clickable_ele.get_attribute("class")
-        # if get_classmethod == "el-tree-node is-current is-focusable":
-        #     pass
-        # else:
-        #     self.click(media_center_locator)
-        # time.sleep(0.5)
-        if get_classmethod == "el-tree-node is-focusable":
-            self.click(media_center_locator)
+            clickable_ele = self.get_element('by_xpath,//div[text()=" 素材中心"]/../..')
+            get_classmethod = clickable_ele.get_attribute("class")
+            # if get_classmethod == "el-tree-node is-current is-focusable":
+            #     pass
+            # else:
+            #     self.click(media_center_locator)
+            # time.sleep(0.5)
+            if get_classmethod == "el-tree-node is-focusable":
+                self.click(media_center_locator)
+        except Exception as e:
+            self.refresh()
 
     def upload_media(self):
         """
         封装一个上传文件的通用方法
         :return:
         """
-        current_window_size =self.get_window_size()
-        print("当前的size为：",current_window_size)
+        current_window_size = self.get_window_size()
+        print("当前的size为：", current_window_size)
         self.maxsize_window()
         # self.switch_to_media_center()   #去掉是因为在联屏姐节目的弹框中，也可以进行上传
         try:
             with step("点击上传按钮"):
                 self.click_up_load()
                 time.sleep(0.5)
-            filepath = r"D:\\ui\\data\\test001.jpeg"
+            filepath = r"D:\\git\\ui_test\\data\\test001.jpeg"
             with step("进行文件上传"):
                 self.upload_media_file(filepath)
                 time.sleep(5)
@@ -67,7 +70,7 @@ class MediaPage(BasePage):
             with step("点击上传按钮"):
                 self.click_up_load_from_program()
                 time.sleep(0.5)
-            filepath = r"D:\\ui\\data\\test001.jpeg"
+            filepath = r"D:\\git\\ui_test\\data\\test001.jpeg"
             with step("进行文件上传"):
                 self.upload_media_file(filepath)
                 time.sleep(5)
@@ -102,7 +105,6 @@ class MediaPage(BasePage):
             my_element = '//span[text()="上传"]'
             element = wait.until(EC.element_to_be_clickable((By.XPATH, my_element)))
             element.click()
-
 
     def click_up_load_from_program(self):
         """
@@ -214,7 +216,7 @@ class MediaPage(BasePage):
         """
         try:
             all_more_buttons = 'by_xpath,//div[@class="info-bar"]/..//div[@class="tool"]//img'
-            all_more_button_ele =self.get_elements(all_more_buttons)
+            all_more_button_ele = self.get_elements(all_more_buttons)
             first_more_button = all_more_button_ele[0]
             ActionChains(self.driver).move_to_element(first_more_button).click(first_more_button).perform()
         except Exception:
@@ -383,12 +385,14 @@ class MediaPage(BasePage):
         :return:
         """
         driver = self.driver
-        preview_place = 'by_xpath,//div[@class="main"]'
+        # preview_place = 'by_xpath,//div[@class="main"]'
+        #鼠标hover到素材上面，目的：等待关闭按钮出现
+        preview_place = 'by_xpath,//div[@class="dialogImg"]'
         place_ele = self.get_element(preview_place)
         ActionChains(driver).move_to_element(place_ele).perform()
 
         # 关闭按钮是否可见
-        close_preview_locator = 'by_xpath,//div[@class="main"]/i'
+        close_preview_locator = 'by_xpath,//div[@class="dialogImg"]//../i/*'
         try:
             if self.element_exist(close_preview_locator):
                 self.click(close_preview_locator)
@@ -419,7 +423,7 @@ class MediaPage(BasePage):
         批量操作：点击新建文件夹按钮
         :return:
         """
-        try :
+        try:
             mkdir_locator = 'by_xpath,//span[text()="文件夹"]'
             self.click(mkdir_locator)
         except ElementClickInterceptedException as e:

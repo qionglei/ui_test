@@ -32,7 +32,7 @@ class ReleasePage(BasePage):
         # except Exception:
         #     raise
 
-        choose_terminal_locator = 'by_xpath,//div[text()="选设备"]/../img'
+        choose_terminal_locator = 'by_xpath,//div[@class="step-name" and text()="选设备"]/..'
         self.click(choose_terminal_locator)
 
     def program_edit(self):
@@ -82,6 +82,7 @@ class ReleasePage(BasePage):
         if get_classmethod == "polygon":
             self.choose_terminal()
             self.select_all_terminals()
+            self.confirm_button()
 
 
 
@@ -108,6 +109,7 @@ class ReleasePage(BasePage):
         if get_classmethod == "polygon":
             self.choose_terminal()
             self.select_all_terminals()
+            self.confirm_button()
 
 
     #  ============================发布策略======================================================
@@ -393,7 +395,7 @@ class ReleasePage(BasePage):
         节目编排中，在周期周几处，点击加号按钮
         :return:
         """
-        self.click('by_xpath,//div[@class="period"]/../div[@class="add"]')
+        self.click('by_xpath,//div[@class="period"]/../div[@class="add" and text()="+"]')
 
     def set_every_monday_display(self):
         """

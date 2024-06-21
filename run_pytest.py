@@ -16,7 +16,7 @@ if __name__ == "__main__":
     now = datetime.datetime.now()
     time_str = now.strftime("%Y-%m-%d-%H%M%S")
     # 此处命令 --alluredir 生成了报告的原始文件
-    pytest.main(["-vs", "-n 4","--dist=loadfile","--alluredir", "./Report/{}xml".format(time_str)])
+    pytest.main(["-vs", "-n 8","--dist=loadfile","--alluredir", "./Report/{}xml".format(time_str)])
     # pytest.main(["D:\\ui\\test_case\\test_release_management.py","-vs", "--alluredir", "./Report/{}xml".format(time_str)])
     print("开始收集报告=======================>")
     # 此处命令 allure generate 将前面生成的json文件转换为html的报告
