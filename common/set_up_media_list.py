@@ -1,7 +1,7 @@
 import json
 import logging
 
-from common.get_cookie import login_cookie, headers
+from common.get_cookie import login_cookie, headers, crop_id, org_id
 import requests
 # from config.log_config import logger
 
@@ -19,10 +19,10 @@ class MediaList:
         base_url = "/cuteview/media/getInPage"
         media_url = host + base_url
         body = {
-            "cropId": "1751805517940535298",
+            "cropId": crop_id(),
             "folderId": "0",
             "mediaId": "",
-            "orgId": "1751805517940535299",
+            "orgId": org_id(),
             "secType": "",
             "name": "",
             "tagIds": [],
@@ -47,6 +47,8 @@ class MediaList:
             folder_ids = [folder['id'] for folder in res['data']['folderList']]
         else:
             folder_ids = None
+        print("media_ids:",media_ids)
+        print("folder_ids:",folder_ids)
         return media_ids, folder_ids
 
     def delete_all_media(self):
@@ -70,8 +72,8 @@ class MediaList:
         resp = requests.post(url=delete_url, data=json.dumps(body), headers=self.headers)
         # logger.info("success detele all folders")
 
-# if __name__ == "__main__":
-#     media_list = MediaList()
-#     media_list.get_media_list()
-#     media_list.delete_all_folder()
-#     media_list.delete_all_media()
+if __name__ == "__main__":
+    media_list = MediaList()
+    media_list.get_media_list()
+    # media_list.delete_all_folder()
+    # media_list.delete_all_media()

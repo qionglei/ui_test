@@ -240,3 +240,4 @@ class TestSystemManagement:
             system_page.search_log_date(start=self.yesterday, end=self.today)
             time.sleep(0.3)
             system_page.clear_log_date()
+

@@ -1,9 +1,10 @@
 import json
+import random
 import time
 
 import requests
 
-from common.get_cookie import login_cookie,headers
+from common.get_cookie import login_cookie,headers,crop_id,org_id
 from common.set_up_org import OrgList
 
 org_list = OrgList()
@@ -20,11 +21,11 @@ class Terminal_List:
         """
 
         body = {
-            'cropId': '1751805517940535298',
+            'cropId': crop_id(),
             'currentPage': 1,
             'pageSize': 10,
             'name': '',
-            'orgId': '1751805517940535299',
+            'orgId': org_id(),
             'orgIds': [],
             'tagIds': []
         }
@@ -47,25 +48,55 @@ class Terminal_List:
     def delete_terminal(self, terminal_id):
         ids = self.get_terminal_list()
         cookie = self.cookie
-        headers = {'Content-Type': 'application/json',
-                   'cookie': cookie,
-                   'Context-Crop-Id': '1751805517940535298',
-                   'Context-Org-Id': '1751805517940535299'
-                   }
+        # headers = {'Content-Type': 'application/json',
+        #            'cookie': cookie,
+        #            'Context-Crop-Id': '1751805517940535298',
+        #            'Context-Org-Id': '1751805517940535299'
+        #            }
         body = {
-            "cropId": "1751805517940535298",
+            "cropId": crop_id(),
             "name": "",
             "id": "",
             "ids": terminal_id,
-            "orgId": "1751805517940535299",
+            "orgId": org_id(),
+            "orgIds": [],
+            "sn": "",
+            "tagId": 0,
+            "tagIds": []
+        }
+        del_url = 'https://test.hkciot.com/cuteview/terminal/delete'
+        resp = requests.post(url = del_url, data=json.dumps(body), headers=headers())
+        # print("删除设备的接口响应为:", resp.json)
+        # print("请求头body内容是：",resp.request.body)
+
+
+    def clear_terminal(self):
+        ids = self.get_terminal_list()
+        cookie = self.cookie
+        # headers = {'Content-Type': 'application/json',
+        #            'cookie': cookie,
+        #            'Context-Crop-Id': '1751805517940535298',
+        #            'Context-Org-Id': '1751805517940535299'
+        #            }
+
+        terminal_id = self.get_terminal_list()
+
+        body = {
+            "cropId": crop_id(),
+            "name": "",
+            "id": "",
+            "ids": terminal_id,
+            "orgId": org_id(),
             "orgIds": [],
             "sn": "",
             "tagId": 0,
             "tagIds": []
         }
         url = 'https://test.hkciot.com/cuteview/terminal/delete'
-        resp = requests.post(url, data=json.dumps(body), headers=headers)
+        resp = requests.post(url, data=json.dumps(body), headers=headers())
         # print("删除设备的接口响应为:", resp)
+        # print("请求头body内容是：",resp.request.body)
+
 
     def get_terminal_names(self):
         """
@@ -74,11 +105,11 @@ class Terminal_List:
         """
 
         body = {
-            'cropId': '1751805517940535298',
+            'cropId': crop_id(),
             'currentPage': 1,
             'pageSize': 10,
             'name': '',
-            'orgId': '1751805517940535299',
+            'orgId': org_id(),
             'orgIds': [],
             'tagIds': []
         }
@@ -103,7 +134,7 @@ class Terminal_List:
         add_terminal_url ='https://test.hkciot.com/cuteview/terminal/join'
 
         body = {
-                "cropId": "1751805517940535298",
+                "cropId": crop_id(),
                 "name": sn,
                 "orgId": org_list.get_org_id(),
                 "tagIds": [],
@@ -111,12 +142,17 @@ class Terminal_List:
             }
 
         response =requests.post(url=add_terminal_url,data =json.dumps(body),headers=self.headers)
-        print("响应数据是：",response.json())
-        print("org_id的值是：",org_list.get_org_id())
+        # print("响应数据是：",response.json())
+        # print("org_id的值是：",org_list.get_org_id())
 
 
-#
-# if __name__ == '__main__':
-#     list_t = Terminal_List()
-#     ids = list_t.get_terminal_list()
-#     list_t.add_terminal_api("123458866865578")
+
+if __name__ == '__main__':
+    list_t = Terminal_List()
+    get_ids = list_t.get_terminal_list()
+    # print("ids:",get_ids)
+    # names = list_t.get_terminal_names()
+    # list_t.add_terminal_api(random.randint(1000,50000))
+
+    # list_t.delete_terminal(get_ids)
+    list_t.clear_terminal()
