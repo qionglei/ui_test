@@ -1,6 +1,6 @@
 import requests
 import json
-from common.get_cookie import login_cookie,headers
+from common.get_cookie import login_cookie,headers,crop_id,org_id
 
 class ProgramList:
     cookie = login_cookie()
@@ -10,8 +10,8 @@ class ProgramList:
         base_url = 'https://test.hkciot.com/cuteview/program/getInPage'
 
         body = {
-            "cropId": "1751805517940535298",
-            "orgId": "1751805517940535299",
+            "cropId": crop_id(),
+            "orgId": org_id(),
             "folderId": 0,
             "pageIndex": 1,
             "pageSize": 10
@@ -36,8 +36,8 @@ class ProgramList:
         base_url = 'https://test.hkciot.com/cuteview/program/getInPage'
 
         body = {
-            "cropId": "1751805517940535298",
-            "orgId": "1751805517940535299",
+            "cropId": crop_id(),
+            "orgId": org_id(),
             "folderId": 0,
             "pageIndex": 1,
             "pageSize": 10
@@ -68,7 +68,7 @@ class ProgramList:
                 delete_program_folder_full_url = delete_program_folder_base_url + str(folder_id)
                 requests.post(url=delete_program_folder_full_url, headers=self.headers)
 
-
+#
 # if __name__ == "__main__":
 #     programlist = ProgramList()
 #     programlist.get_program_list_ids()

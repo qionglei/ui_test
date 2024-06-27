@@ -1,7 +1,7 @@
 import json
 
 import requests
-from common.get_cookie import login_cookie,headers
+from common.get_cookie import login_cookie,headers,crop_id,org_id
 
 
 class PlayBill:
@@ -13,8 +13,8 @@ class PlayBill:
         base_url = 'https://test.hkciot.com/cuteview/play-bill/page/1/10'
 
         body = {
-            "cropId": "1751805517940535298",
-            "orgId": "1751805517940535299",
+            "cropId": crop_id(),
+            "orgId": org_id(),
             "currentPage": 1,
             "pageSize": 10
         }
