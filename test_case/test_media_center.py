@@ -227,6 +227,7 @@ class TestMediaCenter:
         with step("前提：上传图片"):
             media_page.upload_media()
 
+        time.sleep(1)
         with step("点击更多按钮"):
             media_page.click_media_more_button()
 
