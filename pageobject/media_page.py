@@ -217,8 +217,9 @@ class MediaPage(BasePage):
         try:
             all_more_buttons = 'by_xpath,//div[@class="info-bar"]/..//div[@class="tool"]//img'
             all_more_button_ele = self.get_elements(all_more_buttons)
-            first_more_button = all_more_button_ele[0]
-            ActionChains(self.driver).move_to_element(first_more_button).click(first_more_button).perform()
+            if all_more_button_ele:
+                first_more_button = all_more_button_ele[0]
+                ActionChains(self.driver).move_to_element(first_more_button).click(first_more_button).perform()
         except Exception:
             raise
 
@@ -392,7 +393,7 @@ class MediaPage(BasePage):
         ActionChains(driver).move_to_element(place_ele).perform()
 
         # 关闭按钮是否可见
-        close_preview_locator = 'by_xpath,//div[@class="dialogImg"]//../i/*'
+        close_preview_locator = 'by_xpath,//i[@class="el-icon closeBtn"]/*'
         try:
             if self.element_exist(close_preview_locator):
                 self.click(close_preview_locator)

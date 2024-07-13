@@ -1,0 +1,20 @@
+env_url: https://test.hkciot.com
+test_env_username: snow
+test_env_password: Aa12345678
+
+#4个账号：悸动烧仙草   good   luckin  snow
+test_env_username1: 悸动烧仙草
+test_env_username2: good
+test_env_username3: luckin
+test_env_username4: snow
+
+#sheet_name = ["悸动烧仙草","古茗","瑞幸","蜜雪冰城"]
+sheet1: 悸动烧仙草
+sheet2: 古茗
+sheet3: 瑞幸
+sheet4: 蜜雪冰城"
+
+# 环境说明
+test_env_url: https://test.hkciot.com
+cloud_env_url: https://cloud.hkciot.com
+

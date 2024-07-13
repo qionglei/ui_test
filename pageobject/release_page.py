@@ -32,7 +32,7 @@ class ReleasePage(BasePage):
         # except Exception:
         #     raise
 
-        choose_terminal_locator = 'by_xpath,//div[@class="step-name" and text()="选设备"]/..'
+        choose_terminal_locator = 'by_xpath,//div[@class="step-name" and text()="选设备"]'
         self.click(choose_terminal_locator)
 
     def program_edit(self):
@@ -77,7 +77,7 @@ class ReleasePage(BasePage):
         #     self.select_all_terminals()
 
         choose_terminal_button = 'by_xpath,//div[@class="step-name" and text()="选设备"]'
-        clickable_ele = self.get_element('by_xpath,//div[@class="step-name" and text()="选设备"]/..')
+        clickable_ele = self.get_element('by_xpath,//div[@class="step-name" and text()="选设备"]')
         get_classmethod = clickable_ele.get_attribute("class")
         if get_classmethod == "polygon":
             self.choose_terminal()

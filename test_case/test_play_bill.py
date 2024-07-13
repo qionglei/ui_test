@@ -292,7 +292,7 @@ class TestPlayBill:
 
     @pytest.mark.run(order=7)
     @allure.title("取消节目单失效")
-    @pytest.mark.usefixtures("generate_one_program")
+    # @pytest.mark.usefixtures("generate_one_program")
     def test_cancel_expiry_play_bill(self):
         play_bill_page = self.play_bill_page
         release_page = self.release_page
@@ -330,7 +330,7 @@ class TestPlayBill:
 
     @pytest.mark.run(order=9)
     @allure.title("取消删除节目单")
-    @pytest.mark.usefixtures("generate_one_program")
+    # @pytest.mark.usefixtures("generate_one_program")
     def test_cancel_delete_play_bill(self):
         play_bill_page = self.play_bill_page
         release_page = self.release_page

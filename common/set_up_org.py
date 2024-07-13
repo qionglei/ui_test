@@ -46,6 +46,7 @@ class OrgList:
 
         global clear_base_url
         ids = self.get_org_ids()
+        ids =ids[::-1]
         iter_times = len(ids)
         for id in ids:
             # print("current id:", id)
@@ -87,7 +88,7 @@ class OrgList:
         all_org_id = [orgs["id"] for orgs in resp["data"]["allChildrenOrg"]]
         print(all_org_id[0])
         return all_org_id[0]
-#
+
 # if __name__ == "__main__":
 #     org_list = OrgList()
 #     org_list.get_org_id()
