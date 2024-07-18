@@ -158,8 +158,9 @@ class AddShop:
             # print(type)
             # # print("names",names)
 
-        # print("self.org_ids：----",self.org_ids)
-        # print("branch_type_ids:",branch_type_ids)
+        print("接口函数中的self.org_ids：-***********************---",self.org_ids)
+        print("接口函数中的branch_type_ids:",branch_type_ids)
+        print("接口函数中的shop_type_ids:", shop_type_ids)
         return self.org_ids, branch_type_ids, shop_type_ids
 
     def get_root_node_id(self):
@@ -205,8 +206,8 @@ class AddShop:
         parent_id = self.get_root_node_id()
         add_url = f'{env_url}/cuteview/org/create'
         for branch in first_row_values:
-            print("all branch:", branch)
-            print("branch-type:", type(branch))
+            # print("all branch:", branch)
+            # print("branch-type:", type(branch))
 
             data = {
                 "contact": "",

@@ -48,9 +48,10 @@ class import_login:
         }
         reps = requests.request(method, login_url, json=req_data)
         reps_json = reps.json()
-        print('登录成功，获取的接口响应reps是:', reps_json)
+        # print('登录成功，获取的接口响应reps是:', reps_json)
         cookies = reps.cookies
-        print('拿到的cookie是', cookies)
+        # print('拿到的cookie是', cookies)
+        print("当前登录接口的用户名是",self.username)
 
         cookies_str = ''  # 将获取的登录cookies拼接为字符串
         for k, v in cookies.items():
