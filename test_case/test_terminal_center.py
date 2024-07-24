@@ -114,16 +114,11 @@ class TestTerminalCenter:
         terminal_page.refresh()
 
 
-    @pytest.mark.skip("fail,定位下拉框有点问题")
+    # @pytest.mark.skip("fail,定位下拉框有点问题")
     @allure.title("设备设置中重新选择机构")
     @pytest.mark.run(order=3)
     def test_rechange_terminal_org(self):
         terminal_page = self.terminal_page
-        # sys_page = self.sys_page
-        # sql_execute()
-        # with step("1、先去组织结构中新增一个门店"):
-        #     sys_page.switch_to_system_management()
-        #     sys_page.add_new_shop("门店002")
         with step("2、新增一个设备"):
             terminal_page.switch_to_terminal_center()
             terminal_page.add_new_terminal()
@@ -695,11 +690,7 @@ class TestTerminalCenter:
     def test_reboot_terminal(self):
         terminal_page = self.terminal_page
         terminal_page.refresh()
-        sys_page = self.sys_page
-        # sql_execute()
         with step("两个前提：1、新增一台机器 2、新增一个门店  2、点击更多按钮 "):
-            # sys_page.switch_to_system_management()
-            # sys_page.add_new_shop("test门店")
             terminal_page.switch_to_terminal_center()
             terminal_page.add_real_terminal()
             terminal_page.click_more_button()

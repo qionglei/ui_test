@@ -8,6 +8,7 @@ from basepage.base_page import BasePage
 from selenium.webdriver import Keys, ActionChains
 
 
+
 class ReleasePage(BasePage):
     def switch_to_release_management(self):
         """
@@ -252,16 +253,16 @@ class ReleasePage(BasePage):
         switch_to_selection_strategy = 'by_xpath,//span[text()=" 选择策略"]'
         self.click(switch_to_selection_strategy)
 
-    def enter_keyboard(self, driver):
+    def enter_keyboard(self):
         """
         键盘enter键，来进行确认
         :return:
         """
         search_locator = 'by_xpath,//input[@placeholder="请输入id或设备名称"]'
         search_button = self.click(search_locator)
-        # ele = self.get_element(search_locator)
-        # ActionChains(driver).move_to_element(ele).send_keys(Keys.ENTER).perform()
         ActionChains(self.driver).send_keys_to_element(search_button, Keys.ENTER).perform()
+
+        # self.driver.send_keys(Keys.ENTER)
 
         # start_button = ('by_xpath,//input[@placeholder="开始日期"]')
         # end_button = ('by_xpath,//input[@placeholder="结束日期"]')
@@ -273,15 +274,17 @@ class ReleasePage(BasePage):
         # self.input(end_button, end)
         # ActionChains(self.driver).send_keys_to_element(end_locator, Keys.ENTER).perform()
 
-    def clear_search(self, driver):
+    def clear_search(self):
         """
-        清空搜索条件
+        清空搜索条件:1、鼠标hover到搜索框上 2、点击删除icon
         :return:
         """
         search_locator = 'by_xpath,//input[@placeholder="请输入id或设备名称"]'
-        # ele = self.get_element(search_locator)
-        # ActionChains(driver).move_to_element(ele).perform()
-        self.clear(search_locator)
+        ele = self.get_element(search_locator)
+        ActionChains(self.driver).move_to_element(ele).perform()
+
+        del_locator ='by_xpath,//input[@placeholder="请输入id或设备名称"]/../span[@class="el-input__suffix"]'
+        self.click(del_locator)
 
     def select_all_terminals(self):
         """

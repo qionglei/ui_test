@@ -344,10 +344,9 @@ class ProgramPage(MediaPage):
     def hover_to_first_program(self):
         all_mask = 'by_xpath,//div[@class="img-box"]'
         all_mask_ele = self.get_elements(all_mask)
-        # print("all_mask_ele::::", all_mask_ele)
-        first_mask_ele = all_mask_ele[0]
-        # print("first_mask_ele:::::", first_mask_ele)
-        ActionChains(self.driver).move_to_element(first_mask_ele).perform()
+        if all_mask_ele:
+            first_mask_ele = all_mask_ele[0]
+            ActionChains(self.driver).move_to_element(first_mask_ele).perform()
 
     def choose_first_program(self):
         choose_first_program_locator = 'by_xpath,//div[@class="mask radiusAll"]/img[2]'
@@ -355,6 +354,28 @@ class ProgramPage(MediaPage):
         # first_ele = all_eles[1]
         # ActionChains(self.driver).move_to_element(first_ele).click(first_ele).perform()
         self.click(choose_first_program_locator)
+
+    def hover_to_all_program(self,num):
+        all_mask = 'by_xpath,//div[@class="img-box"]'
+        all_mask_ele = self.get_elements(all_mask)
+        if all_mask_ele:
+            first_mask_ele = all_mask_ele[num]
+            ActionChains(self.driver).move_to_element(first_mask_ele).perform()
+
+    def choose_all_program(self,num):
+
+        choose_first_program_locator = 'by_xpath,//div[@class="mask radiusAll"]/img[2]'
+        all_eles = self.get_elements(choose_first_program_locator)
+        # for i in range(0,num):
+        #     if i % 2==0:
+        #     first_ele = all_eles[i]
+        #     ActionChains(self.driver).move_to_element(first_ele).click(first_ele).perform()
+        #     self.click(choose_first_program_locator)
+
+        if all_eles:
+            first_ele =all_eles[num]
+            ActionChains(self.driver).move_to_element(first_ele).click(first_ele).perform()
+            self.click(choose_first_program_locator)
 
     def choose_program(self, name):
         """

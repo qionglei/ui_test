@@ -13,7 +13,6 @@ class LoginPage(BasePage):
     password_loc = ('by_xpath,//input[@placeholder="请输入密码"]')
     # 点击登录按钮
     login_button = ('by_xpath,//div[@class="form"]/preceding-sibling::div//div[@class="cus-btn"]/*')
-    personal_logo = ('by_xpath,//img[@alt="logo"]')
 
     @pytest.mark.usefixtures("env")
     def login_ddt(self, username, password, env):
@@ -72,12 +71,45 @@ class LoginPage(BasePage):
         except Exception:
             raise
 
-    def click_personal_logo(self):
+    def click_personal_picture(self):
         """
-        点击头像
+        点击右上角头像
+        :return:
         """
-        # self.hover(self.logo)
-        self.move_to_element(self.personal_logo)
-        self.click(self.personal_logo)
+        personal_picture_locator ='by_xpath,//div[@class="avatar"]'
+        self.click(personal_picture_locator)
 
 
+    def click_personal_center(self):
+        """
+        点击个人中心
+        :return:
+        """
+        personal_center_locator = 'by_xpath,//*[text()=" 个人中心 "]'
+        self.click(personal_center_locator)
+
+    def close_personal_center_alert(self):
+        """
+        关闭个人中心弹框
+        :return:
+        """
+        close_personal_center_button ='by_xpath,//i[@class="el-icon el-dialog__close"]'
+        self.click(close_personal_center_button)
+
+    def modify_email(self,email):
+        """
+        修改邮箱名称
+        :return:
+        """
+        email_locator = 'by_xpath,//input[@placeholder="请输入邮箱"]'
+        self.clear(email_locator)
+        self.input(email_locator,email)
+
+    def personal_center_confirm_button(self):
+        """
+        在个人中心弹框，点击确认按钮
+        :return:
+        """
+        personal_center_confirm_button ='by_xpath,//span[text() =" 确定 "]'
+
+        self.click(personal_center_confirm_button)

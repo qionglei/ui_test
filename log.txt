@@ -1,0 +1,18 @@
+2024-07-19 18:03:46,496 - config.log_config - INFO - Start print log
+2024-07-19 18:03:46,497 - config.log_config - WARNING - Something maybe fail.
+2024-07-19 18:03:46,497 - config.log_config - INFO - Finish
+2024-07-22 09:16:07,085 - config.log_config - INFO - Start print log
+2024-07-22 09:16:07,085 - config.log_config - WARNING - Something maybe fail.
+2024-07-22 09:16:07,085 - config.log_config - INFO - Finish
+2024-07-22 17:41:25,305 - config.log_config - INFO - Start print log
+2024-07-22 17:41:25,305 - config.log_config - WARNING - Something maybe fail.
+2024-07-22 17:41:25,305 - config.log_config - INFO - Finish
+2024-07-23 09:12:06,501 - config.log_config - INFO - Start print log
+2024-07-23 09:12:06,502 - config.log_config - WARNING - Something maybe fail.
+2024-07-23 09:12:06,504 - config.log_config - INFO - Finish
+2024-07-23 15:44:46,018 - config.log_config - INFO - Start print log
+2024-07-23 15:44:46,018 - config.log_config - WARNING - Something maybe fail.
+2024-07-23 15:44:46,018 - config.log_config - INFO - Finish
+2024-07-24 15:52:27,964 - config.log_config - INFO - Start print log
+2024-07-24 15:52:27,967 - config.log_config - WARNING - Something maybe fail.
+2024-07-24 15:52:27,967 - config.log_config - INFO - Finish

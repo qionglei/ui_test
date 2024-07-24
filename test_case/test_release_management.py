@@ -234,27 +234,14 @@ class TestReleaseStrategy:
         with step("点击取消按钮"):
             release_page.close_relase_strategy()
 
-    @pytest.mark.skip(">           terminal_page.switch_to_terminal_center()")
     @pytest.mark.run(order=8)
-    @pytest.mark.usefixtures("add_terminal")
-    # @pytest.mark.usefixtures("terminal_page")
     @allure.title("发布管理：选择一个设备")
     def test_choose_terminal_release(self):
         # terminal_page =self.terminal_page
         release_page = self.release_page
-        # self
-        # with step("先判断设备列表是不是有设备，无则pass，有则添加"):
-        #     terminal_ids = terminal_list()
-        #     print("设备列表是***********：", terminal_ids)
-        #     time.sleep(3)
-        #
-        #     if not terminal_ids:
-        #         print("进行执行了.......")
-        #         terminal_page.switch_to_terminal_center()
-        #         terminal_page.bind_terminal()
-        #     else:
-        #         print("列表不为空")
-        # time.sleep(3)
+        terminal_list_api = Terminal_List()
+        terminal_list_api.add_terminal_api("first terminal")
+
         with step("切换到发布管理tab页"):
             release_page.switch_to_release_management()
 
@@ -269,11 +256,8 @@ class TestReleaseStrategy:
         with step("选完设备后，点击确定"):
             release_page.confirm_release_strategy()
 
-    # @allure.epic("项目hkc")
-    # @allure.feature("release management2")
-    # @pytest.mark.usefixtures("release_page")
-    # class TestReleaseManagemen_2:
-    # terminal_list = Terminal_List()
+        # 执行后 进行清理工作
+        terminal_list_api.clear_terminal()
 
     @pytest.mark.run(order=9)
     @allure.title("选设备，切换到设备分组，再切到组织架构")
@@ -343,11 +327,15 @@ class TestReleaseStrategy:
         with step("点击确定按钮"):
             release_page.click_submit_button()
 
-    @pytest.mark.skip(reason="清空元素时，元素不可见")
+    # @pytest.mark.skip(reason="清空元素时，元素不可见")
     @pytest.mark.run(order=12)
     @allure.title("清空搜索")
     def test_clear_search_terminal(self):
         release_page = self.release_page
+
+        api_terminal_list = Terminal_List()
+        api_terminal_list.add_terminal_api("test_sn001")
+        api_terminal_list.add_terminal_api("test_sn002")
         with step("切换到发布管理tab上"):
             release_page.switch_to_release_management()
 
@@ -355,15 +343,13 @@ class TestReleaseStrategy:
             release_page.choose_terminal()
 
         with step("点击到搜索框上，输入设备名称"):
-            release_page.release_search_terminal("测试名称，后期进行优化")
+            release_page.release_search_terminal("001")
 
-        with step("在输入框中，点击回车键，来确认搜索"):
-            release_page.enter_keyboard(driver)
-
-        time.sleep(5)
+        # with step("在输入框中，点击回车键，来确认搜索"):
+        #     release_page.enter_keyboard()
 
         with step("进行清空操作"):
-            release_page.clear_search(driver)
+            release_page.clear_search()
 
     @allure.title("全选设备")
     @pytest.mark.run(order=13)
@@ -407,11 +393,13 @@ class TestReleaseStrategy:
     @pytest.mark.run(order=15)
     def test_switch_terminal_group(self):
         release_page = self.release_page
+        current_win = release_page.get_window_size()
+        release_page.maxsize_window()
 
         with step("切换到发布管理tab上"):
             release_page.switch_to_release_management()
 
-        time.sleep(0.5)
+        time.sleep(1)
         with step("点击选设备"):
             release_page.choose_terminal()
 
@@ -421,6 +409,8 @@ class TestReleaseStrategy:
         time.sleep(0.3)
         with step("切换到组织架构tab上"):
             release_page.switch_terminal_framework()
+
+        release_page.set_window_size(*current_win)
 
     @allure.title("切换交并集")
     @pytest.mark.run(order=16)
@@ -656,7 +646,6 @@ class TestReleaseStrategy:
         with step("点击到时间轴上面，进行查看"):
             release_page.click_timeline()
 
-    @pytest.mark.skip("没写好报错了")
     @pytest.mark.run(order=26)
     @allure.title("设置时间段1，固定时间播放")
     def test_set_fixed_time_line(self):
@@ -671,11 +660,9 @@ class TestReleaseStrategy:
         with step("时间轴上面，点击加号按钮"):
             release_page.add_time_line()
 
-        time.sleep(5)
         with step("输入开始时间"):
             release_page.fixed_start_time_line()
 
-        time.sleep(5)
         with step("输入结束时间"):
             release_page.fixed_end_time_line()
 
@@ -760,6 +747,7 @@ class TestReleaseStrategy:
             release_page.program_edit()
 
         with step("点击新增按钮"):
+            time.sleep(0.5)
             release_page.click_add_program()
 
         # with step("通过接口，拿到节目列表中所有的节目名称"):
@@ -800,6 +788,7 @@ class TestReleaseStrategy:
         with step('点击节目编排'):
             release_page.program_edit()
 
+        time.sleep(0.5)
         with step("点击新增按钮"):
             release_page.click_add_program()
 
@@ -936,6 +925,7 @@ class TestReleaseStrategy:
         with step('点击节目编排'):
             release_page.program_edit()
 
+        time.sleep(0.5)
         with step("点击新增按钮"):
             release_page.click_add_program()
         init_window_size = release_page.get_window_size()
@@ -979,26 +969,26 @@ class TestReleaseStrategy:
         release_page = self.release_page
         release_page.refresh()
         # 前提：生成一个普通节目
-
         program_page = ProgramPage(driver)
 
         program_page.switch_to_program_management()
         program_page.create_general_program()
+
+        mediapage = MediaPage(driver)
+        program_list_class = ProgramList()
+        program_list_all = program_list_class.get_program_list_names()
+        print("所有的节目名名称为", program_list_all)
+        if not program_list_all:
+            program_page.create_general_program()
+
         with step('点击节目编排'):
             release_page.switch_to_release_management()
             release_page.program_edit()
 
         with step("点击新增按钮"):
+            time.sleep(0.5)
             release_page.click_add_program()
 
-        mediapage = MediaPage(driver)
-        program_list_class = ProgramList()
-        with step("通过接口，拿到节目列表中所有的节目名称"):
-            program_list_all = program_list_class.get_program_list_names()
-            print("所有的节目名名称为", program_list_all)
-            program_name = program_list_all[0]
-            print("拿到的第一个的节目名名称为", program_name)
-            time.sleep(0.5)
         with step("鼠标hover到一个节目上面"):
             release_page.hover_program_and_choice()
             time.sleep(3)

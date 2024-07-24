@@ -9,7 +9,7 @@ from pageobject.login_page import LoginPage
 @allure.epic("项目hkc")
 @allure.feature("login")
 @pytest.mark.skip(reason="重复用例，隐藏不运行")
-class TestTestIn:
+class SkipTestTestIn:
     # 打开浏览器
     def setup(self) -> None:
         self.driver = webdriver.Chrome()
@@ -24,7 +24,7 @@ class TestTestIn:
 
     @pytest.mark.parametrize('case', read_excel(r'D:\git\ui_test\data\data.xlsx', 'login'))
     @allure.title("登录成功")
-    def test_01_login(self, case):
+    def Skip_test_01_login(self, case):
         """测试登录模块"""
         xh, case_name, username, password, is_exc, result, bz = case
         lp = LoginPage(self.driver)

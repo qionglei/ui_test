@@ -197,7 +197,7 @@ class TestMediaCenter:
     @pytest.mark.run(order=8)
     @pytest.mark.usefixtures("media_set_up")
     @allure.title("预览素材")
-    def test_delete_multi_file(self):
+    def test_preview_media(self):
         media_page = self.media_page
         media_page.switch_to_media_center()
         # 通用方法，进行素材上传
@@ -384,6 +384,7 @@ class TestMediaCenter:
     def test_success_delete_multi_file(self):
         media_page = self.media_page
         media_page.switch_to_media_center()
+        time.sleep(0.5)
         # 通用方法，进行素材上传
         media_page.upload_media()
         with step("1、先鼠标hover到素材上面"):
