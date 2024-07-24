@@ -5,7 +5,6 @@ import pytest
 from basepage.base_page import BasePage
 from selenium.webdriver.common.by import By
 
-
 # @pytest.mark.usefixtures("env")
 class LoginPage(BasePage):
     """登录功能"""

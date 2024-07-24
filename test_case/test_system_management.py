@@ -344,15 +344,12 @@ class TestSystemManagement:
             if not system_page.element_exist(preview_system_spacer):
                 system_page.add_stand_system_spacer()
                 time.sleep(3)
-                # system_page.refresh()
                 system_page.switch_to_system_setting()
-                time.sleep(1000)
                 system_page.hover_to_stand()
                 system_page.preview_stand_system_spacer()
             else:
                 system_page.hover_to_stand()
                 system_page.preview_stand_system_spacer()
-                time.sleep(1000)
 
         with step("关闭预览按钮"):
             system_page.close_stand_preview()
