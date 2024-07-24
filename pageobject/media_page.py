@@ -385,12 +385,12 @@ class MediaPage(BasePage):
         3、点击关闭按钮，进行关闭预览
         :return:
         """
-        driver = self.driver
         # preview_place = 'by_xpath,//div[@class="main"]'
-        #鼠标hover到素材上面，目的：等待关闭按钮出现
+
+        # 鼠标hover到素材上面，目的：等待关闭按钮出现
         preview_place = 'by_xpath,//div[@class="dialogImg"]'
         place_ele = self.get_element(preview_place)
-        ActionChains(driver).move_to_element(place_ele).perform()
+        ActionChains(self.driver).move_to_element(place_ele).click(place_ele).perform()
 
         # 关闭按钮是否可见
         close_preview_locator = 'by_xpath,//i[@class="el-icon closeBtn"]/*'

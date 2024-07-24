@@ -42,7 +42,7 @@ class Terminal_List:
         res = reponse.json()
 
         ids = [record['id'] for record in res['data']['records']]
-        # print("拿到的ids：", ids)
+        print("拿到的ids：", ids)
         return ids
 
     def delete_terminal(self, terminal_id):
@@ -155,4 +155,4 @@ if __name__ == '__main__':
     # list_t.add_terminal_api(random.randint(1000,50000))
 
     # list_t.delete_terminal(get_ids)
-    list_t.clear_terminal()
+    # list_t.clear_terminal()

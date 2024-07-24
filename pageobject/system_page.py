@@ -1,9 +1,9 @@
 import time
 import random
 
+import pyperclip
 import pytest
 from selenium.common import InvalidSelectorException
-
 
 from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.support import wait, expected_conditions
@@ -16,6 +16,7 @@ from pageobject.login_page import LoginPage
 # import datetime
 from datetime import date, datetime
 from selenium.common.exceptions import ElementClickInterceptedException
+
 
 class SystemPage(BasePage):
     # def __init__(self, driver):
@@ -288,3 +289,322 @@ class SystemPage(BasePage):
         del_new_shop_loca = ('by_xpath,//div[text()="test门店"]/following::img[2]')
         self.click(del_new_shop_loca)
         self.delete_org_confirm()
+
+    def switch_to_system_setting(self):
+        """
+        切换到系统管理-系统设置tab上
+        :return:
+        """
+        system_setting = 'by_xpath,//span[text()="系统设置"]'
+        self.click(system_setting)
+
+    # **************************横屏系统垫片操作***********************************
+    def add_accross_system_spacer(self):
+        """
+        添加横屏系统垫片
+        :return:
+        """
+        add_system_spacer_button = 'by_xpath,//div[@class="img-box imgBody"]/../input'
+        # self.click(add_system_spacer_button)
+        upload_file = self.get_element(add_system_spacer_button)
+        time.sleep(2)
+        system_file_path = r'D:\git\ui_test\data\system_spacer_accross.jpeg'
+        upload_file.send_keys(system_file_path)
+
+    def hover_to_accross(self):
+        """
+        鼠标hover到横屏系统垫片
+        :return:
+        """
+        hover_to_accross = 'by_xpath,//div[@class="img-box imgBody"]'
+        hover_to_accross_ele = self.get_element(hover_to_accross)
+        ActionChains(self.driver).move_to_element(hover_to_accross_ele).perform()
+
+    def preview_accross_system_spacer(self):
+        """
+        预览横屏系统垫片
+        :return:
+        """
+        preview_system_spacer = 'by_xpath,//div[@class="mask1"]/img[1]'
+        self.click(preview_system_spacer)
+
+    def close_accross_preview(self):
+        """
+        关闭横屏系统垫片预览
+        :return:
+        """
+        hover_preview = 'by_xpath,//div[@class="dialogImg"]'
+        hover_preview_ele = self.get_element(hover_preview)
+        ActionChains(self.driver).move_to_element(hover_preview_ele).perform()
+
+        close_preview_button = 'by_xpath,//i[@class="el-icon closeBtn"]'
+        if self.element_exist(close_preview_button):
+            self.click(close_preview_button)
+
+    def replace_accross_system_spacer(self):
+        """
+        更新横屏系统垫片
+        """
+        replace_system_spacer = 'by_xpath,//div[@class="img-box imgBody"]/../input'
+        replace_system_spacer_ele = self.get_element(replace_system_spacer)
+        replace_path = r'D:\git\ui_test\data\system_spacer_stand_1.jpg'
+        replace_system_spacer_ele.send_keys(replace_path)
+
+    def delete_accross_system_spacer(self):
+        """
+        删除横屏系统垫片
+        :return:
+        """
+        delete_accross_system_spacer = 'by_xpath,//div[@class="mask1"]/img[3]'
+        self.click(delete_accross_system_spacer)
+
+    # **************************竖屏系统垫片操作***********************************
+
+    def add_stand_system_spacer(self):
+        """
+        添加竖屏系统垫片
+        :return:
+        """
+        add_stand_system_spacer_button = 'by_xpath,//div[@class="imgBody"]/../input'
+        upload_file = self.get_element(add_stand_system_spacer_button)
+        time.sleep(2)
+        system_file_path = r'D:\git\ui_test\data\system_spacer_stand.jpeg'
+        upload_file.send_keys(system_file_path)
+
+    def hover_to_stand(self):
+        """
+        鼠标hover到竖屏系统垫片
+        :return:
+        """
+        hover_to_stand = 'by_xpath,//div[@class="imgBody"]'
+        hover_to_stand_ele = self.get_element(hover_to_stand)
+        ActionChains(self.driver).move_to_element(hover_to_stand_ele).perform()
+
+    def preview_stand_system_spacer(self):
+        """
+        预览竖屏系统垫片
+        :return:
+        """
+        preview_stand_system_spacer = 'by_xpath,//div[@class="mask2"]/img[1]'
+        self.click(preview_stand_system_spacer)
+
+    def close_stand_preview(self):
+        """
+        关闭竖屏系统垫片预览
+        :return:
+        """
+        hover_preview = 'by_xpath,//div[@class="dialogImg"]'
+        hover_preview_ele = self.get_element(hover_preview)
+        ActionChains(self.driver).move_to_element(hover_preview_ele).perform()
+
+        close_preview_button = 'by_xpath,//i[@class="el-icon closeBtn"]'
+        if self.element_exist(close_preview_button):
+            self.click(close_preview_button)
+
+    def replace_stand_system_spacer(self):
+        """
+        更新竖屏系统垫片
+        """
+        replace_system_spacer = 'by_xpath,//div[@class="imgBody"]/../input'
+        replace_system_spacer_ele = self.get_element(replace_system_spacer)
+        replace_path = r'D:\git\ui_test\data\system_spacer_stand_1.jpg'
+        replace_system_spacer_ele.send_keys(replace_path)
+
+    def delete_stand_system_spacer(self):
+        """
+        删除竖屏系统垫片
+        :return:
+        """
+        delete_accross_system_spacer = 'by_xpath,//div[@class="mask2"]/img[3]'
+        self.click(delete_accross_system_spacer)
+
+    # ************************** 开发者tab页*********************************
+    def switch_to_develops(self):
+        """
+        切换到开发者页面
+        :return:
+        """
+        switch_to_develops = 'by_xpath,//span[text()="开发者"]'
+        self.click(switch_to_develops)
+
+    def click_gen_access_key(self):
+        """
+        点击重新生成
+        :return:
+        """
+        get_access_key ='by_xpath,//span[text()="重新生成"]'
+        self.click(get_access_key)
+
+    def close_gen_access_key_alert(self):
+        """
+        关闭生成弹框
+        :return:
+        """
+        close_gen_access_key = 'by_xpath,//i[@class="el-icon el-dialog__close"]'
+        self.click(close_gen_access_key)
+
+    def cancel_gen_access_key_alert(self):
+        """
+        取消重新生成key
+        :return:
+        """
+        cancel_gen_button = 'by_xpath,//span[text()="取消"]'
+        self.click(cancel_gen_button)
+
+    def confirm_gen_access_key(self):
+        """
+        确认生成access key
+        :return:
+        """
+        confirm_gen_access_key = 'by_xpath,//span[text()=" 确定 "]'
+        self.click(confirm_gen_access_key)
+
+    def copy_access_key(self):
+        """
+        复制access key,从剪贴板拿到key
+        :return:
+        """
+        copy_access_key_button ='by_xpath,//img[@class="copy"]'
+        self.click(copy_access_key_button)
+
+        clipboard_content = pyperclip.paste()
+        print("\n从剪贴板拿到的access key是：",clipboard_content)
+
+        return None
+
+    def return_access_key(self):
+        """
+        拿到access key
+        :return:
+        """
+        access_key_locator = 'by_xpath,//span[@class="val"]'
+        key = self.get_element(access_key_locator)
+        access_key = key.text
+        print("\n通过元素拿到的key是:",access_key)
+
+    def download_dynamic_api_instruction(self):
+        """
+        动态数据API说明文件
+        :return:
+        """
+        download_instruction_locator = 'by_xpath,//span[text()="动态数据API说明文件"]/../span[2]'
+        self.click(download_instruction_locator)
+
+    def download_dynamic_sdk_file(self):
+        """
+        下载动态数据SDK依赖包
+        :return:
+        """
+        download_sdk_file = 'by_xpath,//span[text()="动态数据SDK依赖包"]/../span[2]'
+        self.click(download_sdk_file)
+
+    def download_dynamic_example_code(self):
+        """
+        下载动态数据调用样例代码
+        :return:
+        """
+        download_dynamic_example_code ='by_xpath,//span[text()="动态数据调用样例代码"]/../span[2]'
+        self.click(download_dynamic_example_code)
+
+# ****************************** 选项维护tab页 *************************************************
+
+    def switch_to_option_maintenance(self):
+        """
+        切换到选项维护tab页上
+        :return:
+        """
+        option_maintenance ='by_xpath,//span[text()="选项维护"]'
+        self.click(option_maintenance)
+
+    def click_add_org_type_icon(self):
+        """
+        点击添加机构分类的加号
+        :return:
+        """
+        add_org_type_icon = 'by_xpath,//i[@class="el-icon"]/*'
+        add_eles = self.get_elements(add_org_type_icon)
+        add_ele = add_eles[0]
+        ActionChains(self.driver).click(add_ele).perform()
+        # add_org_type_icon = 'by_xpath,//li[text()="机构分类"]/../li[2]/i'
+        # self.click(add_org_type_icon)
+
+
+    def input_org_type_description(self,description):
+        """
+        添加机构分类，输入分类描述
+        :return:
+        """
+        org_type_description = 'by_xpath,//input[@placeholder="分类描述最多不超过10个字"]'
+        self.input(org_type_description,description)
+
+    def input_org_type_remark(self,remark):
+        """
+        输入机构分类备注
+        :return:
+        """
+        org_type_remark = 'by_xpath,//input[@placeholder="备注最多不超过10个字"]'
+        self.input(org_type_remark,remark)
+
+    def edit_org_type(self):
+        """
+        修改机构分类，点击修改icon
+        :return:
+        """
+        edit_org_type = 'by_xpath,//li[text()="机构分类"]/../../ul[2]/li[1]//img[1]'
+        self.click(edit_org_type)
+
+    def delete_org_type(self):
+        """
+        删除机构分类，点击删除icon
+        :return:
+        """
+        delete_org_type = 'by_xpath,//li[text()="机构分类"]/../../ul[2]/li[1]//img[2]'
+        self.click(delete_org_type)
+
+
+#  ***************************机构级别**********************************************
+    def click_add_org_level_icon(self):
+        """
+        点击添加机构级别的加号
+        :return:
+        """
+        add_org_level_icon = 'by_xpath,//i[@class="el-icon"]/*'
+        add_eles = self.get_elements(add_org_level_icon)
+        add_ele = add_eles[1]
+        ActionChains(self.driver).click(add_ele).perform()
+        # add_org_level_icon = 'by_xpath,//li[text()="机构级别"]/../li[2]/i'
+        # self.click(add_org_level_icon)
+
+
+    def input_org_level_description(self,description):
+        """
+        添加机构级别，输入级别描述
+        :return:
+        """
+        org_level_description = 'by_xpath,//input[@placeholder="级别描述最多不超过10个字"]'
+        self.input(org_level_description,description)
+
+    def input_org_level_remark(self,remark):
+        """
+        输入机构级别备注
+        :return:
+        """
+        org_level_remark = 'by_xpath,//input[@placeholder="备注最多不超过10个字"]'
+        self.input(org_level_remark,remark)
+
+    def edit_org_level(self):
+        """
+        修改机构级别，点击修改icon
+        :return:
+        """
+        edit_org_level = 'by_xpath,//li[text()="机构级别"]/../../ul[2]/li[1]//img[1]'
+        self.click(edit_org_level)
+
+    def delete_org_level(self):
+        """
+        删除机构级别，点击删除icon
+        :return:
+        """
+        delete_org_level = 'by_xpath,//li[text()="机构级别"]/../../ul[2]/li[1]//img[2]'
+        self.click(delete_org_level)
+

@@ -395,7 +395,6 @@ class TestProgramManagement:
         with step("点击确认按钮"):
             program_page.multi_delete_confirm()
 
-    @pytest.mark.skip(reason="多选时报错")
     @allure.title("同时删除3个节目")
     @pytest.mark.run(order=14)
     def test_multi_delete_three_program(self):
@@ -406,22 +405,21 @@ class TestProgramManagement:
                 program_page.create_general_program()
                 # random_name = rerurn_name.random_program_name
 
-        with step("通过接口，拿到节目列表中所有的节目名称"):
+        with step("选择3个节目"):
+            # 拿到所有的节目数量
+            # 节目进行逐个hover，然后进行勾选
             program_list_class = self.program_list_class
             program_list_all = program_list_class.get_program_list_names()
-            for i in range(0,3):
-                program_name = program_list_all[i]
-                time.sleep(0.5)
-                with step("鼠标hover到一个节目上面"):
-                    program_page.hover_to_program(program_name)
-                with step("选择一个节目"):
-                    program_page.choose_program(program_name)
+            count = len(program_list_all)
+            for i in range(0,count):
+                program_page.hover_to_all_program(i)
+                program_page.choose_all_program(i)
+
         with step("点击批量删除按钮"):
             program_page.multi_delete_program()
         with step("点击确认按钮"):
             program_page.multi_delete_confirm()
 
-    @pytest.mark.skip(reason = '失败了，原因未知')
     @allure.title("取消删除一个节目")
     @pytest.mark.run(order=15)
     def test_cancel_delete_program(self):

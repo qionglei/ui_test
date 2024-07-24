@@ -52,3 +52,7 @@
 2024-06-18 10:26:49,843 - config.log_config - INFO - Start print log
 2024-06-18 10:26:49,844 - config.log_config - WARNING - Something maybe fail.
 2024-06-18 10:26:49,844 - config.log_config - INFO - Finish
+2024-07-19 17:48:56,289 - config.log_config - INFO - Start print log
+2024-07-19 17:48:56,291 - config.log_config - WARNING - Something maybe fail.
+2024-07-19 17:48:56,292 - config.log_config - INFO - Finish
+
